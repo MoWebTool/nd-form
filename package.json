@@ -1,6 +1,6 @@
 {
   "name": "nd-form",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-form",
@@ -22,7 +22,7 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-exec": "^0.4.6",
     "grunt-jsdoc": "^0.5.7",
-    "grunt-spm-server": "^0.1.2",
+    "grunt-spm-server": "^0.2.2",
     "load-grunt-tasks": "^0.6.0"
   },
   "spm": {
@@ -32,7 +32,7 @@
       "jquery": "1.11.1",
       "nd-widget": "0.1.0",
       "nd-template": "0.0.0",
-      "nd-validator": "0.1.0",
+      "nd-validator": "0.1.1",
       "nd-ajax": "0.1.0",
       "placeholders.js": "3.0.2"
     },
