@@ -7,7 +7,6 @@
 
 var
   $ = require('jquery'),
-  // Promise = require('promise'),
   Widget = require('nd-widget'),
   Template = require('nd-template'),
   Validator = require('nd-validator'),
@@ -15,6 +14,8 @@ var
 
 // Placeholders runs automatically
 require('placeholders.js');
+
+var FD = require('./src/formdata');
 
 var Form = module.exports = Widget.extend({
 
@@ -44,7 +45,7 @@ var Form = module.exports = Widget.extend({
     // 数据
     model: {},
 
-    itemClass: 'ui-form-item',
+    itemClass: '{{classPrefix}}-item',
 
     name: 'form',
     method: 'POST',
@@ -54,11 +55,37 @@ var Form = module.exports = Widget.extend({
       getter: function(values) {
         // 第一次，取默认值，用于表单初始化
         // 第 N 次，取表单实时值，用于表单提交
-        return values || this.element.serialize();
+        return this.element ? new FD(this.element[0].elements) : values;
       },
       setter: function(values) {
+        // 仅在初始化表单时执行一次
         if (!values) {
           return;
+        }
+
+        var matchers = this.get('matchers') || {},
+          matchesParsed = {};
+
+        function valueMatcher(value, match, key) {
+          if (matchesParsed[key]) {
+            match = matchesParsed[key];
+          } else if (typeof match === 'string' &&
+              /^(\[.+\]|\{.+\})$/.test(match)) {
+            try {
+              // translate value to array
+              match = JSON.parse(match);
+              matchesParsed[key] = match;
+            } catch(e) {
+              // do nothing
+            }
+          }
+
+          // array
+          if (match && typeof match === 'object') {
+            return $.inArray(value, match) !== -1;
+          }
+
+          return value === match;
         }
 
         // 初始数据写入到 fields
@@ -70,9 +97,8 @@ var Form = module.exports = Widget.extend({
             if (field.options) {
               // 设置 option/checkbox/radio 的选中状态
               $.each(field.options, function(j, option) {
-                if (option.value === field.value) {
-                  option.selected = option.checked = true;
-                }
+                option.selected = option.checked =
+                  (matchers[field.name] || valueMatcher)(option.value, field.value, field.name);
               });
             }
           }
@@ -83,17 +109,20 @@ var Form = module.exports = Widget.extend({
       }
     },
 
+    dataParser: function(fd) {
+      return fd.toParam();
+    },
+
     // 返回数据类型
     dataType: 'json',
 
-    // 表单就绪后初始化验证
+    // 表单就绪（插入到 DOM）后初始化验证
     afterRender: '_initValidator'
   },
 
   parseElement: function() {
     this.set('model', {
       classPrefix: this.get('classPrefix'),
-      itemClass: this.get('itemClass'),
       name: this.get('name'),
       action: this.get('action'),
       method: this.get('method'),
@@ -106,11 +135,18 @@ var Form = module.exports = Widget.extend({
   },
 
   _initValidator: function() {
-    var that = this;
-
-    // Widget.autoRenderAll();
+    var that = this,
+      classPrefix = this.get('classPrefix');
 
     this.validtor = new Validator({
+      classPrefix: classPrefix,
+      explainClass: classPrefix + '-explain',
+      itemClass: classPrefix + '-item',
+      itemHoverClass: classPrefix + '-item-hover',
+      itemFocusClass: classPrefix + '-item-focus',
+      itemErrorClass: classPrefix + '-item-error',
+      inputClass: classPrefix + '-input',
+      textareaClass: classPrefix + '-textarea',
       element: this.element,
       failSilently: true,
       autoSubmit: false,
@@ -147,7 +183,7 @@ var Form = module.exports = Widget.extend({
       settings: {
         url: this.get('action'),
         type: this.get('method'),
-        data: this.get('formData'),
+        data: this.get('dataParser')(this.get('formData')),
         dataType: this.get('dataType')
       },
       events: this.get('ajaxEvents'),
