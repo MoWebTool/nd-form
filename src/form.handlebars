@@ -1,0 +1,43 @@
+<form name="{{name}}" action="{{action}}" method="{{method}}">
+
+{{!-- fields --}}
+<ul>
+  {{#each fields}}
+  <li class="{{../itemClass}}">
+    <label for="{{../name}}-{{name}}">{{label}}</label>
+
+    {{!-- textarea --}}
+    {{#isType 'textarea'}}
+      <textarea name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
+    {{/isType}}
+
+    {{!-- select --}}
+    {{#isType 'select'}}
+      <select name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{> options}}</select>
+    {{/isType}}
+
+    {{!-- radio/checkbox --}}
+    {{#isType 'radio,checkbox'}}
+      <div class="{{type}}-group" id="{{../../name}}-{{name}}">
+      {{#each options}}
+        <input type="{{../type}}" name="{{../name}}" id="{{../../../name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}
+>
+        <label for="{{../../../name}}-{{../name}}-{{value}}">{{text}}</label>
+      {{/each}}
+      </div>
+    {{/isType}}
+
+    {{!-- inputs --}}
+    {{#isType 'hidden,text,password,file,email,number,range,date,time,datetime,color'}}
+      <input type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
+    {{/isType}}
+  </li>
+  {{/each}}
+</ul>
+
+{{!-- buttons --}}
+{{#each buttons}}
+  <button class="{{cssClass}}" type="{{type}}">{{label}}</button>
+{{/each}}
+
+</form>
