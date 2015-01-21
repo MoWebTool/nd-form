@@ -1,44 +1,53 @@
 <form class="{{classPrefix}}" name="{{name}}" action="{{action}}" method="{{method}}" data-role="form">
 
-{{!-- fields --}}
-<ul class="{{classPrefix}}-items">
-  {{#each fields}}
-  <li class="{{../classPrefix}}-item">
-    <label for="{{../name}}-{{name}}">{{label}}</label>
+  {{!-- fields --}}
+    <ul class="{{classPrefix}}-items">
+      {{#each fields}}
+          <li class="{{../classPrefix}}-item">
+            {{#if label}}
+                <label for="{{../name}}-{{name}}">{{label}}</label>
+            {{/if}}
+            {{!-- textarea --}}
+            {{#isType 'textarea'}}
+                <textarea class="{{../../classPrefix}}-textarea" name="{{name}}"
+                          id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
+            {{/isType}}
 
-    {{!-- textarea --}}
-    {{#isType 'textarea'}}
-      <textarea class="{{../../classPrefix}}-textarea" name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
-    {{/isType}}
+            {{!-- select --}}
+            {{#isType 'select'}}
+                <select name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{> options}}</select>
+            {{/isType}}
 
-    {{!-- select --}}
-    {{#isType 'select'}}
-      <select name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{> options}}</select>
-    {{/isType}}
+            {{!-- radio/checkbox --}}
+            {{#isType 'radio,checkbox'}}
+                <div class="{{type}}-group" id="{{../../name}}-{{name}}">
+                  {{#each options}}
+                      <input type="{{../type}}" name="{{../name}}" id="{{../../../name}}-{{../name}}-{{value}}"
+                             value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}}
+                             data-errormessage-{{@key}}="{{this}}"{{/each}}>
+                      <label for="{{../../../name}}-{{../name}}-{{value}}">{{text}}</label>
+                  {{/each}}
+                </div>
+            {{/isType}}
 
-    {{!-- radio/checkbox --}}
-    {{#isType 'radio,checkbox'}}
-      <div class="{{type}}-group" id="{{../../name}}-{{name}}">
-      {{#each options}}
-        <input type="{{../type}}" name="{{../name}}" id="{{../../../name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
-        <label for="{{../../../name}}-{{../name}}-{{value}}">{{text}}</label>
+            {{!-- inputs --}}
+            {{#isType 'hidden,text,password,file,email,number,range,date,time,datetime,color'}}
+                <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}"
+                       name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
+            {{/isType}}
+            {{#isType 'custom'}}
+              {{{value}}}
+            {{/isType}}
+          </li>
       {{/each}}
-      </div>
-    {{/isType}}
+    </ul>
 
-    {{!-- inputs --}}
-    {{#isType 'hidden,text,password,file,email,number,range,date,time,datetime,color'}}
-      <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
-    {{/isType}}
-  </li>
-  {{/each}}
-</ul>
-
-{{!-- buttons --}}
-<div class="{{classPrefix}}-buttons">
-  {{#each buttons}}
-    <button class="{{../classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}" data-role="{{role}}">{{label}}</button>
-  {{/each}}
-</div>
+  {{!-- buttons --}}
+    <div class="{{classPrefix}}-buttons">
+      {{#each buttons}}
+          <button class="{{../classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}"
+                  data-role="{{role}}">{{label}}</button>
+      {{/each}}
+    </div>
 
 </form>

@@ -1,6 +1,9 @@
 # History
 
 ---
+##0.1.5
+
+- add custom field type
 
 ## 0.1.1
 
