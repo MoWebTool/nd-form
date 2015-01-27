@@ -35,6 +35,8 @@
                 <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}"
                        name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
             {{/isType}}
+
+            {{!-- custom --}}
             {{#isType 'custom'}}
               {{{value}}}
             {{/isType}}
@@ -45,8 +47,12 @@
   {{!-- buttons --}}
     <div class="{{classPrefix}}-buttons">
       {{#each buttons}}
+        {{#isType 'custom'}}
+          {{{value}}}
+        {{else}}
           <button class="{{../classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}"
                   data-role="{{role}}">{{label}}</button>
+        {{/isType}}
       {{/each}}
     </div>
 

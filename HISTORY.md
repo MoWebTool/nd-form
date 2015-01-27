@@ -1,9 +1,13 @@
 # History
 
 ---
+##0.1.6
+
+- add buttons custom field type
+
 ##0.1.5
 
-- add custom field type
+- add fields custom field type
 
 ## 0.1.1
 
