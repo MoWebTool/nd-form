@@ -110,7 +110,7 @@ var Form = module.exports = Widget.extend({
     },
 
     dataParser: function(fd) {
-      return fd.toParam();
+      return fd.toJSON();
     },
 
     // 返回数据类型
@@ -179,7 +179,11 @@ var Form = module.exports = Widget.extend({
   },
 
   submit: function() {
-    new Ajax({
+    this._ajaxSubmit();
+  },
+
+  _ajaxSubmit: function() {
+    return new Ajax({
       settings: {
         url: this.get('action'),
         type: this.get('method'),

@@ -65,6 +65,11 @@ FD.prototype.append = function(name, value) {
 
   if (typeof value === 'string') {
     value = trim(value);
+
+    try {
+      value = JSON.parse(value);
+    } catch(e) {
+    }
   }
 
   this._each(function(pair) {
@@ -118,7 +123,16 @@ FD.prototype.get = function(name) {
 FD.prototype.set = function(name, value) {
   this._each(function(pair) {
     if (pair.name === name) {
-      pair.value = (typeof value === 'string') ? trim(value) : value;
+      if (typeof value === 'string') {
+        value = trim(value);
+
+        try {
+          value = JSON.parse(value);
+        } catch(e) {
+        }
+      }
+
+      pair.value = value;
 
       return false;
     }
@@ -146,7 +160,7 @@ FD.prototype.toParam = function() {
     }
   });
 
-  return param.join('&').replace(/%20/g, '+');
+  return param.join('&');
 };
 
 FD.prototype.toJSON = function() {
