@@ -70,7 +70,7 @@ var Form = module.exports = Widget.extend({
           if (matchesParsed[key]) {
             match = matchesParsed[key];
           } else if (typeof match === 'string' &&
-              /^(\[.+\]|\{.+\})$/.test(match)) {
+            /^(\[.+\]|\{.+\})$/.test(match)) {
             try {
               // translate value to array
               match = JSON.parse(match);
@@ -90,9 +90,16 @@ var Form = module.exports = Widget.extend({
 
         // 初始数据写入到 fields
         $.each(this.get('fields'), function(i, field) {
+          var value;
           if (field.name in values) {
+            value = values[field.name];
+
+            if (value && typeof value === 'object') {
+              value = JSON.stringify(value);
+            }
+
             // 设置当前值
-            field.value = values[field.name];
+            field.value = value;
 
             if (field.options) {
               // 设置 option/checkbox/radio 的选中状态
@@ -110,7 +117,7 @@ var Form = module.exports = Widget.extend({
     },
 
     dataParser: function(fd) {
-      return fd.toParam();
+      return fd.toJSON();
     },
 
     // 返回数据类型
@@ -179,7 +186,11 @@ var Form = module.exports = Widget.extend({
   },
 
   submit: function() {
-    new Ajax({
+    this._ajaxSubmit();
+  },
+
+  _ajaxSubmit: function() {
+    return new Ajax({
       settings: {
         url: this.get('action'),
         type: this.get('method'),

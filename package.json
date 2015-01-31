@@ -33,7 +33,7 @@
       "nd-widget": "0.1.1",
       "nd-template": "0.1.0",
       "nd-validator": "0.1.2",
-      "nd-ajax": "0.1.0",
+      "nd-ajax": "0.1.1",
       "placeholders.js": "3.0.2"
     },
     "devDependencies": {
