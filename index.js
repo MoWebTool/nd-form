@@ -177,9 +177,11 @@ var Form = module.exports = Widget.extend({
       //   this.getExplain(element).html(element.data('explain') || ' ');
       //   this.getItem(element).removeClass(this.get('itemErrorClass'));
       // },
-      onFormValidated: function(err/*, results, form*/) {
+      onFormValidated: function(err, results, form) {
         if (!err) {
           that.submit();
+        }else{
+          that.trigger('failValidator',results,form);
         }
       }
     });
