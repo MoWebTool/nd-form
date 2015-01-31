@@ -169,6 +169,15 @@ var Form = module.exports = Widget.extend({
 
         return label || item.element.attr('name');
       },
+      showMessage: function(message, element) {
+        var explainEle=this.getExplain(element);
+        if(element.attr('showerror')==='no'){
+          explainEle.html('');
+        }else{
+          explainEle.html(message);
+        }
+        this.getItem(element).addClass(this.get('itemErrorClass'));
+      },
       // showMessage: function(message, element) {
       //   this.getExplain(element).html(message);
       //   this.getItem(element).addClass(this.get('itemErrorClass'));
