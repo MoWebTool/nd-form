@@ -10,10 +10,11 @@ var
   Widget = require('nd-widget'),
   Template = require('nd-template'),
   Validator = require('nd-validator'),
-  Ajax = require('nd-ajax');
+  Ajax = require('nd-ajax'),
+  placeHolder=require('nd-placeholder');
 
 // Placeholders runs automatically
-require('placeholders.js');
+
 
 var FD = require('./src/formdata');
 
@@ -144,8 +145,8 @@ var Form = module.exports = Widget.extend({
   _initValidator: function() {
     var that = this,
       classPrefix = this.get('classPrefix');
-
-    this.validtor = new Validator({
+    placeHolder.render();
+    this.validator = new Validator({
       classPrefix: classPrefix,
       explainClass: classPrefix + '-explain',
       itemClass: classPrefix + '-item',
