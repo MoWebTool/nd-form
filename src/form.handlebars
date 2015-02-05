@@ -21,9 +21,7 @@
       {{#isType 'radio,checkbox'}}
         <div class="{{type}}-group" id="{{../../name}}-{{name}}">
           {{#each options}}
-            <input type="{{../type}}" name="{{../name}}" id="{{../../../name}}-{{../name}}-{{value}}"
-               value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}}
-               data-errormessage-{{@key}}="{{this}}"{{/each}}>
+            <input type="{{../type}}" name="{{../name}}" id="{{../../../name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
             <label for="{{../../../name}}-{{../name}}-{{value}}">{{text}}</label>
           {{/each}}
         </div>
@@ -31,8 +29,7 @@
 
       {{!-- inputs --}}
       {{#isType 'hidden,text,password,file,email,number,range,date,time,datetime,color'}}
-        <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}"
-             name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
+        <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
       {{/isType}}
 
       {{!-- custom --}}
@@ -49,8 +46,7 @@
     {{#isType 'custom'}}
       {{{value}}}
     {{else}}
-      <button class="{{../classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}"
-          data-role="{{role}}">{{label}}</button>
+      <button class="{{../../classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}" data-role="{{role}}">{{label}}</button>
     {{/isType}}
     {{/each}}
   </div>

@@ -11,7 +11,7 @@ var
   Template = require('nd-template'),
   Validator = require('nd-validator'),
   Ajax = require('nd-ajax'),
-  placeHolder=require('nd-placeholder');
+  placeHolder = require('nd-placeholder');
 
 // Placeholders runs automatically
 
@@ -76,7 +76,7 @@ var Form = module.exports = Widget.extend({
               // translate value to array
               match = JSON.parse(match);
               matchesParsed[key] = match;
-            } catch(e) {
+            } catch (e) {
               // do nothing
             }
           }
@@ -145,11 +145,9 @@ var Form = module.exports = Widget.extend({
   _initValidator: function() {
     var that = this,
       classPrefix = this.get('classPrefix');
-<<<<<<< HEAD
 
-=======
     placeHolder.render();
->>>>>>> 01607a1ed5e348a680a2dd832e5ce9861dfa0468
+
     this.validator = new Validator({
       classPrefix: classPrefix,
       explainClass: classPrefix + '-explain',
@@ -175,12 +173,14 @@ var Form = module.exports = Widget.extend({
         return label || item.element.attr('name');
       },
       showMessage: function(message, element) {
-        var explainEle=this.getExplain(element);
-        if(element.attr('showerror')==='no'){
+        var explainEle = this.getExplain(element);
+
+        if (element.attr('showerror') === 'no') {
           explainEle.html('');
-        }else{
+        } else {
           explainEle.html(message);
         }
+
         this.getItem(element).addClass(this.get('itemErrorClass'));
       },
       // showMessage: function(message, element) {
@@ -194,8 +194,8 @@ var Form = module.exports = Widget.extend({
       onFormValidated: function(err, results, form) {
         if (!err) {
           that.submit();
-        }else{
-          that.trigger('failValidator',results,form);
+        } else {
+          that.trigger('failValidator', results, form);
         }
       }
     });
