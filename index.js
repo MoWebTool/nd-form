@@ -145,7 +145,7 @@ var Form = module.exports = Widget.extend({
     var that = this,
       classPrefix = this.get('classPrefix');
 
-    this.validtor = new Validator({
+    this.validator = new Validator({
       classPrefix: classPrefix,
       explainClass: classPrefix + '-explain',
       itemClass: classPrefix + '-item',
