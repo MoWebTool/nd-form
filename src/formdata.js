@@ -66,9 +66,15 @@ FD.prototype.append = function(name, value) {
   if (typeof value === 'string') {
     value = trim(value);
 
-    try {
-      value = JSON.parse(value);
-    } catch(e) {
+    var firstChar = value.charAt(0);
+    var lastChar = value.substr(-1, 1);
+
+    if ((firstChar === '[' && lastChar === ']') ||
+        (firstChar === '{' && lastChar === '}')) {
+      try {
+        value = JSON.parse(value);
+      } catch(e) {
+      }
     }
   }
 
