@@ -157,6 +157,7 @@ var Form = module.exports = Widget.extend({
       itemErrorClass: classPrefix + '-item-error',
       inputClass: classPrefix + '-input',
       textareaClass: classPrefix + '-textarea',
+      stopOnError: this.get('stopOnError'),
       element: this.element,
       failSilently: true,
       autoSubmit: false,
