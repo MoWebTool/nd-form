@@ -12,7 +12,7 @@
  * @class FD
  * @constructor
  */
-var FD = function(fields) {
+var FD = module.exports = function(fields) {
   return this.initialize(fields);
 };
 
@@ -180,5 +180,3 @@ FD.prototype.toJSON = function() {
 
   return json;
 };
-
-module.exports = FD;

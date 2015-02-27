@@ -8,15 +8,7 @@
 var
   $ = require('jquery'),
   Widget = require('nd-widget'),
-  Template = require('nd-template'),
-  Validator = require('nd-validator'),
-  Ajax = require('nd-ajax'),
-  placeHolder = require('nd-placeholder');
-
-// Placeholders runs automatically
-
-
-var FD = require('./src/formdata');
+  Template = require('nd-template');
 
 var Form = module.exports = Widget.extend({
 
@@ -54,9 +46,7 @@ var Form = module.exports = Widget.extend({
     // 提交数据
     formData: {
       getter: function(values) {
-        // 第一次，取默认值，用于表单初始化
-        // 第 N 次，取表单实时值，用于表单提交
-        return this.element ? new FD(this.element[0].elements) : values;
+        return values;
       },
       setter: function(values) {
         // 仅在初始化表单时执行一次
@@ -122,15 +112,11 @@ var Form = module.exports = Widget.extend({
     },
 
     // 返回数据类型
-    dataType: 'json',
-
-    // 表单就绪（插入到 DOM）后初始化验证
-    afterRender: '_initValidator'
+    dataType: 'json'
   },
 
   parseElement: function() {
     this.set('model', {
-      classPrefix: this.get('classPrefix'),
       name: this.get('name'),
       action: this.get('action'),
       method: this.get('method'),
@@ -142,81 +128,8 @@ var Form = module.exports = Widget.extend({
     Form.superclass.parseElement.call(this);
   },
 
-  _initValidator: function() {
-    var that = this,
-      classPrefix = this.get('classPrefix');
-
-    placeHolder.render();
-
-    this.validator = new Validator({
-      classPrefix: classPrefix,
-      explainClass: classPrefix + '-explain',
-      itemClass: classPrefix + '-item',
-      itemHoverClass: classPrefix + '-item-hover',
-      itemFocusClass: classPrefix + '-item-focus',
-      itemErrorClass: classPrefix + '-item-error',
-      inputClass: classPrefix + '-input',
-      textareaClass: classPrefix + '-textarea',
-      stopOnError: this.get('stopOnError'),
-      element: this.element,
-      failSilently: true,
-      autoSubmit: false,
-      displayHelper: function(item) {
-        var label, id,
-          parent = item.element.parent('.checkbox-group, .radio-group');
-
-        id = parent.length ? parent.attr('id') : item.element.attr('id');
-
-        if (id) {
-          label = $('label[for="' + id + '"]').text();
-        }
-
-        return label || item.element.attr('name');
-      },
-      showMessage: function(message, element) {
-        var explainEle = this.getExplain(element);
-
-        if (element.attr('showerror') === 'no') {
-          explainEle.html('');
-        } else {
-          explainEle.html(message);
-        }
-
-        this.getItem(element).addClass(this.get('itemErrorClass'));
-      },
-      // showMessage: function(message, element) {
-      //   this.getExplain(element).html(message);
-      //   this.getItem(element).addClass(this.get('itemErrorClass'));
-      // },
-      // hideMessage: function(message, element) {
-      //   this.getExplain(element).html(element.data('explain') || ' ');
-      //   this.getItem(element).removeClass(this.get('itemErrorClass'));
-      // },
-      onFormValidated: function(err, results, form) {
-        if (!err) {
-          that.submit();
-        } else {
-          that.trigger('failValidator', results, form);
-        }
-      }
-    });
-  },
-
   submit: function() {
-    this._ajaxSubmit();
-  },
-
-  _ajaxSubmit: function() {
-    return new Ajax({
-      settings: {
-        url: this.get('action'),
-        type: this.get('method'),
-        data: this.get('dataParser')(this.get('formData')),
-        dataType: this.get('dataType')
-      },
-      events: this.get('ajaxEvents'),
-      handlers: this.get('ajaxHandlers')
-    });
+    this.element.submit();
   }
 
 });
