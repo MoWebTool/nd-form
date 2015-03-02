@@ -5,12 +5,11 @@
 
 'use strict';
 
-var
-  $ = require('jquery'),
+var $ = require('jquery'),
   Widget = require('nd-widget'),
   Template = require('nd-template');
 
-var Form = module.exports = Widget.extend({
+var Form = Widget.extend({
 
   // 使用 handlebars
   Implements: Template,
@@ -37,8 +36,6 @@ var Form = module.exports = Widget.extend({
 
     // 数据
     model: {},
-
-    itemClass: '{{classPrefix}}-item',
 
     name: 'form',
     method: 'POST',
@@ -105,14 +102,17 @@ var Form = module.exports = Widget.extend({
         // 最终返回 undefined，写入到 value
         // 以确保表单提交读取的是 serialize
       }
-    },
+    }
+  },
 
-    dataParser: function(fd) {
-      return fd.toJSON();
-    },
+  events: {
+    'submit': function(e) {
+      this.trigger('submit', e);
+    }
+  },
 
-    // 返回数据类型
-    dataType: 'json'
+  getElements: function() {
+    return this.element[0].elements;
   },
 
   parseElement: function() {
@@ -126,10 +126,8 @@ var Form = module.exports = Widget.extend({
     });
 
     Form.superclass.parseElement.call(this);
-  },
-
-  submit: function() {
-    this.element.submit();
   }
 
 });
+
+module.exports = Form;
