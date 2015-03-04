@@ -28,7 +28,7 @@
       {{/isType}}
 
       {{!-- inputs --}}
-      {{#isType 'hidden,text,password,file,email,number,range,date,time,datetime,color,url,mobile'}}
+      {{#isType ''}}
         <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
       {{/isType}}
 
