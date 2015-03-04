@@ -16,6 +16,9 @@ var Form = Widget.extend({
 
   templateHelpers: {
     isType: function(types, options) {
+      // if (!types) {
+        // return
+      // }
       return $.inArray(this.type || 'text', types.split(',')) !== -1 ?
         options.fn(this) : options.inverse(this);
     }
