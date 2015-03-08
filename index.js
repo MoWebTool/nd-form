@@ -9,6 +9,8 @@ var $ = require('jquery'),
   Widget = require('nd-widget'),
   Template = require('nd-template');
 
+var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,color,url,mobile,digits';
+
 var Form = Widget.extend({
 
   // 使用 handlebars
@@ -16,7 +18,7 @@ var Form = Widget.extend({
 
   templateHelpers: {
     isType: function(types, options) {
-      types || (types = 'hidden,text,password,file,email,number,range,date,time,datetime,color,url,mobile');
+      types || (types = TEXT_TYPES);
 
       return $.inArray(this.type || 'text', types.split(',')) !== -1 ?
         options.fn(this) : options.inverse(this);
