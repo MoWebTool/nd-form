@@ -120,7 +120,7 @@ var Form = Widget.extend({
   events: {
     'click [data-role]': function(e) {
       if (this.trigger(getEventName(e)) === false) {
-        return false;
+        e.preventDefault();
       }
     }
   },
