@@ -11,10 +11,18 @@ var $ = require('jquery'),
 
 var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,color,url,mobile,digits';
 
+function getEventName(e) {
+  return e.currentTarget
+    .getAttribute('data-role')
+    .replace(/\-([a-zA-Z])/g, function(_, $1) {
+      return $1.toUpperCase();
+    });
+}
+
 var Form = Widget.extend({
 
   // 使用 handlebars
-  Implements: Template,
+  Implements: [Template],
 
   templateHelpers: {
     isType: function(types, options) {
@@ -110,8 +118,10 @@ var Form = Widget.extend({
   },
 
   events: {
-    'submit': function(e) {
-      this.trigger('submit', e);
+    'click [data-role]': function(e) {
+      if (this.trigger(getEventName(e)) === false) {
+        return false;
+      }
     }
   },
 
