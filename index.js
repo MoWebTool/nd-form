@@ -58,9 +58,8 @@ var Form = Widget.extend({
         return values;
       },
       setter: function(values) {
-        // 仅在初始化表单时执行一次
-        if (!values) {
-          return;
+        if (!values || this.rendered) {
+          return values;
         }
 
         var matchers = this.get('matchers') || {},
@@ -91,6 +90,7 @@ var Form = Widget.extend({
         // 初始数据写入到 fields
         $.each(this.get('fields'), function(i, field) {
           var value;
+
           if (field.name in values) {
             value = values[field.name];
 
@@ -111,8 +111,7 @@ var Form = Widget.extend({
           }
         });
 
-        // 最终返回 undefined，写入到 value
-        // 以确保表单提交读取的是 serialize
+        return values;
       }
     }
   },
