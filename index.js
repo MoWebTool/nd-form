@@ -9,7 +9,7 @@ var $ = require('jquery'),
   Widget = require('nd-widget'),
   Template = require('nd-template');
 
-var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,color,url,mobile,digits';
+var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,datetime-local,color,url,mobile,digits';
 
 function getEventName(e) {
   return e.currentTarget
@@ -34,6 +34,7 @@ var Form = Widget.extend({
   },
 
   templatePartials: {
+    fields: require('./src/fields.handlebars'),
     attrs: require('./src/attrs.handlebars'),
     messages: require('./src/messages.handlebars'),
     options: require('./src/options.handlebars')
@@ -45,6 +46,12 @@ var Form = Widget.extend({
 
     // 模板
     template: require('./src/form.handlebars'),
+
+    // 标签名
+    nodeNames: {
+      item: 'li',
+      items: 'ul'
+    },
 
     // 数据
     model: {},
@@ -124,21 +131,71 @@ var Form = Widget.extend({
     }
   },
 
-  getElements: function() {
-    return this.element[0].elements;
-  },
+  initAttrs: function() {
+    Form.superclass.initAttrs.apply(this, arguments);
 
-  parseElement: function() {
     this.set('model', {
       name: this.get('name'),
       action: this.get('action'),
       method: this.get('method'),
-      values: this.get('values'),
+      nodeNames: this.get('nodeNames'),
+      // values: this.get('values'),
       fields: this.get('fields'),
       buttons: this.get('buttons')
     });
+  },
 
-    Form.superclass.parseElement.call(this);
+  getElements: function() {
+    return this.element[0].elements;
+  },
+
+  addField: function(options) {
+    var insertInto = options.insertInto,
+      parentNode = options.parentNode,
+      nodeNames = options.nodeNames;
+
+    if (insertInto) {
+      delete options.insertInto;
+    }
+
+    if (parentNode) {
+      // 一般来说是 [name="xxx"]
+      if (typeof parentNode === 'string') {
+        parentNode = this.$(parentNode).closest('[data-role="form-item"]');
+
+        // 此时默认插入到 父对象（item）下方
+        if (!insertInto) {
+          insertInto = function(element, parentNode) {
+            element.insertAfter(parentNode);
+          };
+        }
+      }
+
+      delete options.parentNode;
+    } else {
+      parentNode = this.$('[data-role="form-items"]');
+    }
+
+    if (!insertInto) {
+      // 默认插入到父对象里
+      insertInto = function(element, parentNode) {
+        element.appendTo(parentNode);
+      };
+    }
+
+    if (nodeNames) {
+      delete options.parentNode;
+    }
+
+    insertInto($(this.templatePartials.fields({
+      classPrefix: this.get('classPrefix'),
+      name: this.get('name'),
+      nodeNames: nodeNames || this.get('nodeNames'),
+      fields: [options]
+    }, {
+      helpers: this.templateHelpers,
+      partials: this.templatePartials
+    })), parentNode);
   }
 
 });

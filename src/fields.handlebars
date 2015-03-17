@@ -1,0 +1,36 @@
+{{#each fields}}
+  <{{../nodeNames.item}} class="{{../classPrefix}}-item" data-role="form-item">
+  {{#if label}}
+    <label for="{{../../name}}-{{name}}">{{label}}</label>
+  {{/if}}
+  {{!-- textarea --}}
+  {{#isType 'textarea'}}
+    <textarea class="{{../../classPrefix}}-textarea" name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
+  {{/isType}}
+
+  {{!-- select --}}
+  {{#isType 'select'}}
+    <select name="{{name}}" id="{{../../name}}-{{name}}"{{> attrs}}{{> messages}}>{{> options}}</select>
+  {{/isType}}
+
+  {{!-- radio/checkbox --}}
+  {{#isType 'radio,checkbox'}}
+    <div class="{{type}}-group" id="{{../../name}}-{{name}}">
+      {{#each options}}
+        <input type="{{../type}}" name="{{../name}}" id="{{../../../name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
+        <label for="{{../../../name}}-{{../name}}-{{value}}">{{text}}</label>
+      {{/each}}
+    </div>
+  {{/isType}}
+
+  {{!-- inputs --}}
+  {{#isType ''}}
+    <input class="{{../../classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{../../name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
+  {{/isType}}
+
+  {{!-- custom --}}
+  {{#isType 'custom'}}
+    {{{value}}}
+  {{/isType}}
+  </{{../nodeNames.item}}>
+{{/each}}
