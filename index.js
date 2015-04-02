@@ -19,6 +19,20 @@ function getEventName(e) {
     });
 }
 
+function filterSkip(elements) {
+  var i;
+  var n = elements.length;
+
+  for (i = 0; i < n; i++) {
+    if (elements[i].getAttribute('data-skip') === 'true') {
+      elements.splice(i--, 1);
+      n--;
+    }
+  }
+
+  return elements;
+}
+
 var Form = Widget.extend({
 
   // 使用 handlebars
@@ -145,7 +159,7 @@ var Form = Widget.extend({
   },
 
   getElements: function() {
-    return this.element[0].elements;
+    return filterSkip(this.element[0].elements);
   },
 
   getGroup: function(group) {
