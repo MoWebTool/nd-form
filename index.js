@@ -139,7 +139,6 @@ var Form = Widget.extend({
       action: this.get('action'),
       method: this.get('method'),
       nodeNames: this.get('nodeNames'),
-      // values: this.get('values'),
       fields: this.get('fields'),
       buttons: this.get('buttons')
     });
@@ -147,6 +146,40 @@ var Form = Widget.extend({
 
   getElements: function() {
     return this.element[0].elements;
+  },
+
+  getGroup: function(group) {
+    return this.$('[data-group="' + group + '"]');
+  },
+
+  getItem: function(name) {
+    return this.getField(name).closest('[data-role="form-item"]');
+  },
+
+  getField: function(name) {
+    return this.$('[name="' + name + '"]');
+  },
+
+  getValue: function(name) {
+    var field = this.getField(name);
+
+    if (!field.length) {
+      return undefined;
+    }
+
+    if (field.length === 1) {
+      return field.val();
+    }
+
+    var value = [];
+
+    field.each(function(i, item) {
+      if (!/^(?:radio|checkbox)$/.test(item.type) || item.checked) {
+        value.push(item.value);
+      }
+    });
+
+    return value;
   },
 
   addField: function(options) {
