@@ -20,17 +20,17 @@ function getEventName(e) {
 }
 
 function filterSkip(elements) {
+  var ret = [];
   var i;
   var n = elements.length;
 
   for (i = 0; i < n; i++) {
-    if (elements[i].getAttribute('data-skip') === 'true') {
-      elements.splice(i--, 1);
-      n--;
+    if (elements[i].getAttribute('data-skip') !== 'true') {
+      ret.push(elements[i]);
     }
   }
 
-  return elements;
+  return ret;
 }
 
 var Form = Widget.extend({
