@@ -7,6 +7,8 @@
 
 var $ = require('jquery'),
   Widget = require('nd-widget'),
+  FD = require('nd-formdata'),
+  Queue = require('nd-queue'),
   Template = require('nd-template');
 
 var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,datetime-local,color,url,mobile,digits';
@@ -134,6 +136,12 @@ var Form = Widget.extend({
 
         return values;
       }
+    },
+
+    fields: [],
+
+    dataParser: function() {
+      return new FD(this.getElements()).toJSON();
     }
   },
 
@@ -156,6 +164,11 @@ var Form = Widget.extend({
       fields: this.get('fields'),
       buttons: this.get('buttons')
     });
+  },
+
+  initProps: function() {
+    // 队列，用于异步处理
+    this.queue = new Queue();
   },
 
   getElements: function() {
@@ -206,9 +219,9 @@ var Form = Widget.extend({
     }
 
     if (parentNode) {
-      // 一般来说是 [name="xxx"]
+      // 一般来说是 name xxx
       if (typeof parentNode === 'string') {
-        parentNode = this.$(parentNode).closest('[data-role="form-item"]');
+        parentNode = this.getItem(parentNode);
 
         // 此时默认插入到 父对象（item）下方
         if (!insertInto) {

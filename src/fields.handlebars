@@ -4,14 +4,14 @@
   {{!-- group --}}
   {{#if group}}
 
-    class="{{@root.classPrefix}}-group" data-role="{{@root.classPrefix}}-group" data-group="{{group}}">
+    class="{{@root.classPrefix}}-group" data-role="form-group" data-group="{{group}}">
       <{{@root.nodeNames.items}} class="{{@root.classPrefix}}-items" data-role="form-items">
         {{> fields}}
       </{{@root.nodeNames.items}}>
 
   {{else}}
 
-    class="{{@root.classPrefix}}-item" data-role="{{@root.classPrefix}}-item">
+    class="{{@root.classPrefix}}-item" data-role="form-item">
 
     {{#if label}}
       <label for="{{@root.name}}-{{name}}">{{label}}</label>
