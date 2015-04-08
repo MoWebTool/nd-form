@@ -22,7 +22,6 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-exec": "^0.4.6",
     "grunt-jsdoc": "^0.5.7",
-    "grunt-spm-server": "^0.2.5",
     "load-grunt-tasks": "^0.6.0"
   },
   "spm": {
@@ -31,7 +30,9 @@
       "handlebars-runtime": "3.0.1",
       "jquery": "1.11.1",
       "nd-widget": "1.0.0",
-      "nd-template": "1.0.0"
+      "nd-template": "1.0.0",
+      "nd-queue": "1.0.0",
+      "nd-formdata": "1.0.0"
     },
     "devDependencies": {
       "expect.js": "0.3.1"

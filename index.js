@@ -110,6 +110,9 @@ var Form = Widget.extend({
           return value === match;
         }
 
+        // 数据处理
+        values = this.get('inFilter').call(this, values);
+
         // 初始数据写入到 fields
         $.each(this.get('fields'), function(i, field) {
           var value;
@@ -140,8 +143,16 @@ var Form = Widget.extend({
 
     fields: [],
 
+    inFilter: function(data) {
+      return data;
+    },
+
+    outFilter: function(data) {
+      return data;
+    },
+
     dataParser: function() {
-      return new FD(this.getElements()).toJSON();
+      return this.get('outFilter').call(this, new FD(this.getElements()).toJSON());
     }
   },
 
