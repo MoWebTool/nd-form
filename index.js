@@ -113,29 +113,38 @@ var Form = Widget.extend({
         // 数据处理
         values = this.get('inFilter').call(this, values);
 
-        // 初始数据写入到 fields
-        $.each(this.get('fields'), function(i, field) {
-          var value;
+        function setValues(fields) {
+          // 初始数据写入到 fields
+          $.each(fields, function(i, field) {
+            var value;
 
-          if (field.name in values) {
-            value = values[field.name];
-
-            if (value && typeof value === 'object') {
-              value = JSON.stringify(value);
+            if (field.fields) {
+              setValues(field.fields);
+              return;
             }
 
-            // 设置当前值
-            field.value = value;
+            if (field.name in values) {
+              value = values[field.name];
 
-            if (field.options) {
-              // 设置 option/checkbox/radio 的选中状态
-              $.each(field.options, function(j, option) {
-                option.selected = option.checked =
-                  (matchers[field.name] || valueMatcher)(option.value, field.value, field.name);
-              });
+              if (value && typeof value === 'object') {
+                value = JSON.stringify(value);
+              }
+
+              // 设置当前值
+              field.value = value;
+
+              if (field.options) {
+                // 设置 option/checkbox/radio 的选中状态
+                $.each(field.options, function(j, option) {
+                  option.selected = option.checked =
+                    (matchers[field.name] || valueMatcher)(option.value, field.value, field.name);
+                });
+              }
             }
-          }
-        });
+          });
+        }
+
+        setValues(this.get('fields'));
 
         return values;
       }
