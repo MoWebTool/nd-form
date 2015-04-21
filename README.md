@@ -1,8 +1,8 @@
 # nd-form
 
-[![spm version](http://spmjs.io/badge/nd-form)](http://spmjs.io/package/nd-form)
+[![spm version](http://spm.crossjs.com/badge/nd-form)](http://spm.crossjs.com/package/nd-form)
 
-> 1.x, 专注于做 form，不再集成 validator、ajax、placeholder，改为插件方式实现。
+> 集成了 nd-formdata 与 nd-queue 的表单。
 
 ## 安装
 

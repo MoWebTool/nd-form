@@ -18,7 +18,7 @@
     {{/if}}
 
     {{!-- textarea --}}
-    {{#isType 'textarea'}}
+    {{#isType 'textarea,multiline'}}
       <textarea class="{{@root.classPrefix}}-textarea" name="{{name}}" id="{{@root.name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
     {{/isType}}
 
@@ -40,6 +40,11 @@
     {{!-- inputs --}}
     {{#isType ''}}
       <input class="{{@root.classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{@root.name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
+    {{/isType}}
+
+    {{!-- static --}}
+    {{#isType 'static'}}
+      <div class="{{@root.classPrefix}}-static">{{value}}</div>
     {{/isType}}
 
     {{!-- custom --}}
