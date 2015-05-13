@@ -5,11 +5,11 @@
 
 'use strict';
 
-var $ = require('jquery'),
-  Widget = require('nd-widget'),
-  FD = require('nd-formdata'),
-  Queue = require('nd-queue'),
-  Template = require('nd-template');
+var $ = require('jquery');
+var Widget = require('nd-widget');
+var FD = require('nd-formdata');
+var Queue = require('nd-queue');
+var Template = require('nd-template');
 
 var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,datetime-local,color,url,mobile,digits';
 
@@ -38,7 +38,7 @@ function filterSkip(elements) {
 var Form = Widget.extend({
 
   // 使用 handlebars
-  Implements: [Template],
+  Implements: [Template, Queue],
 
   templateHelpers: {
     isType: function(types, options) {
@@ -158,23 +158,34 @@ var Form = Widget.extend({
 
     outFilter: function(data) {
       return data;
-    },
-
-    dataParser: function() {
-      return this.get('outFilter').call(this, new FD(this.getElements()).toJSON());
     }
   },
 
   events: {
-    'click [data-role]': function(e) {
+    // for attrs.buttons
+    'click button[data-role]': function(e) {
       if (this.trigger(getEventName(e)) === false) {
+        // preventing, such as form submit
         e.preventDefault();
       }
     }
   },
 
-  initAttrs: function() {
-    Form.superclass.initAttrs.apply(this, arguments);
+  submit: function(callback) {
+    var that = this;
+
+    this.run(function() {
+      if (callback) {
+        callback(that.getData());
+      } else {
+        // TODO: apply outFilter
+        that.element.submit();
+      }
+    });
+  },
+
+  initAttrs: function(config) {
+    Form.superclass.initAttrs.call(this, config);
 
     this.set('model', {
       name: this.get('name'),
@@ -186,17 +197,16 @@ var Form = Widget.extend({
     });
   },
 
-  initProps: function() {
-    // 队列，用于异步处理
-    this.queue = new Queue();
-  },
-
-  getElements: function() {
-    return filterSkip(this.element[0].elements);
+  getData: function() {
+    return this.get('outFilter').call(this, new FD(this.getElements()).toJSON());
   },
 
   getGroup: function(group) {
     return this.$('[data-group="' + group + '"]');
+  },
+
+  getElements: function() {
+    return filterSkip(this.element[0].elements);
   },
 
   getItem: function(name) {
@@ -211,7 +221,7 @@ var Form = Widget.extend({
     var field = this.getField(name);
 
     if (!field.length) {
-      return undefined;
+      return;
     }
 
     if (field.length === 1) {
