@@ -172,16 +172,14 @@ var Form = Widget.extend({
   },
 
   submit: function(callback) {
-    var that = this;
-
     this.run(function() {
       if (callback) {
-        callback(that.getData());
+        callback(this.getData());
       } else {
         // TODO: apply outFilter
-        that.element.submit();
+        this.element.submit();
       }
-    });
+    }.bind(this));
   },
 
   initAttrs: function(config) {
