@@ -11,7 +11,7 @@
 
   {{else}}
 
-    class="{{@root.classPrefix}}-item{{#if attrs.required}} required{{/if}}" data-role="form-item">
+    class="{{@root.classPrefix}}-item{{#if cls}} {{cls}}{{/if}}{{#if attrs.required}} required{{/if}}" data-role="form-item">
 
     {{#if label}}
       <label for="{{@root.name}}-{{name}}">{{label}}</label>
