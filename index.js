@@ -103,8 +103,8 @@ var Form = Widget.extend({
           }
 
           // array
-          if (match && typeof match === 'object') {
-            return $.inArray(value, match) !== -1;
+          if (Array.isArray(match)) {
+            return match.indexOf(value)!==-1;
           }
 
           return value === match;
