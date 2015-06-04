@@ -1,6 +1,6 @@
 /**
- * @module: nd-form
- * @author: crossjs <liwenfu@crossjs.com> - 2015-01-16 11:23:31
+ * @module Form
+ * @author crossjs <liwenfu@crossjs.com>
  */
 
 'use strict';
@@ -12,6 +12,9 @@ var Queue = require('nd-queue');
 var Template = require('nd-template');
 
 var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,datetime-local,color,url,mobile,digits';
+
+var SKIP_SUBMIT = 1;
+// var SKIP_VALIDATE = 2; // see: nd-validator
 
 function getEventName(e) {
   return e.currentTarget
@@ -27,7 +30,7 @@ function filterSkip(elements) {
   var n = elements.length;
 
   for (i = 0; i < n; i++) {
-    if (elements[i].getAttribute('data-skip') !== 'true') {
+    if (!(+(elements[i].getAttribute('data-skip') || '') & SKIP_SUBMIT)) {
       ret.push(elements[i]);
     }
   }
@@ -44,7 +47,7 @@ var Form = Widget.extend({
     isType: function(types, options) {
       types || (types = TEXT_TYPES);
 
-      return $.inArray(this.type || 'text', types.split(',')) !== -1 ?
+      return types.split(',').indexOf(this.type || 'text') !== -1 ?
         options.fn(this) : options.inverse(this);
     }
   },
@@ -115,7 +118,7 @@ var Form = Widget.extend({
 
         function setValues(fields) {
           // 初始数据写入到 fields
-          $.each(fields, function(i, field) {
+          fields.forEach(function(field) {
             var value;
 
             if (field.fields) {
@@ -135,7 +138,7 @@ var Form = Widget.extend({
 
               if (field.options) {
                 // 设置 option/checkbox/radio 的选中状态
-                $.each(field.options, function(j, option) {
+                field.options.forEach(function(option) {
                   option.selected = option.checked =
                     (matchers[field.name] || valueMatcher)(option.value, field.value, field.name);
                 });
@@ -235,6 +238,35 @@ var Form = Widget.extend({
     });
 
     return value;
+  },
+
+  setSkip: function(name, value) {
+    this.getField(name).attr('data-skip', '' + value);
+  },
+
+  setField: function(name, options) {
+    var item = this.getItem(name);
+    var prev = item.prev();
+
+    if (prev.length) {
+      options.parentNode = prev;
+      options.insertInto = function(element, parentNode) {
+        element.insertAfter(parentNode);
+      };
+    } else {
+      options.insertInto = function(element, parentNode) {
+        element.prependTo(parentNode);
+      };
+    }
+
+    options.name = name;
+
+    this.removeField(name);
+    this.addField(options);
+  },
+
+  removeField: function(name) {
+    this.getItem(name).remove();
   },
 
   addField: function(options) {
