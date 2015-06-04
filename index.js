@@ -240,6 +240,38 @@ var Form = Widget.extend({
     return value;
   },
 
+  showGroup: function(name) {
+    var group = this.getGroup(name)
+        .removeClass('ui-form-element-invisible');
+
+    group.find('[name]').each(function(i, field) {
+      var _skip = field.getAttribute('data-skip-original');
+
+      if (_skip) {
+        field.setAttribute('data-skip', _skip);
+        field.removeAttribute('data-skip-original');
+      }
+    });
+  },
+
+  hideGroup: function(name, skip) {
+    var group = this.getGroup(name)
+        .addClass('ui-form-element-invisible');
+
+    if (typeof skip !== 'undefined') {
+      group.find('[name]').each(function(i, field) {
+        var _skip = field.getAttribute('data-skip');
+
+        // 0,1,2,3
+        if (_skip) {
+          field.setAttribute('data-skip-original', _skip);
+        }
+
+        field.setAttribute('data-skip', skip);
+      });
+    }
+  },
+
   setSkip: function(name, value) {
     this.getField(name).attr('data-skip', '' + value);
   },
