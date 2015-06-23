@@ -198,8 +198,17 @@ var Form = Widget.extend({
     });
   },
 
+  // 获取实时字段值
   getData: function() {
     return this.get('outFilter').call(this, new FD(this.getElements()).toJSON());
+  },
+
+  // 设置字段值
+  setData: function(data) {
+    data = this.get('inFilter').call(this, data);
+    Object.keys(data).forEach(function(name) {
+      this.getField(name).val(data[name]).trigger('change');
+    }, this);
   },
 
   getGroup: function(group) {
