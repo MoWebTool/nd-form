@@ -4,8 +4,11 @@
   {{!-- group --}}
   {{#if group}}
 
-    class="{{@root.classPrefix}}-group" data-role="form-group" data-group="{{group}}">
-      <{{@root.nodeNames.items}} class="{{@root.classPrefix}}-items" data-role="form-items">
+    class="{{@root.classPrefix}}-group{{#if required}} required{{/if}}" data-role="form-group" data-group="{{group}}">
+      {{#if label}}
+        <label>{{label}}</label>
+      {{/if}}
+      <{{@root.nodeNames.items}} class="{{@root.classPrefix}}-items{{#if inline}} {{@root.classPrefix}}-items-inline{{/if}}" data-role="form-items">
         {{> fields}}
       </{{@root.nodeNames.items}}>
 
