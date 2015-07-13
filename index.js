@@ -272,9 +272,7 @@ var Form = Widget.extend({
         var _skip = field.getAttribute('data-skip');
 
         // 0,1,2,3
-        if (_skip) {
-          field.setAttribute('data-skip-original', _skip);
-        }
+        field.setAttribute('data-skip-original', _skip || 0);
 
         field.setAttribute('data-skip', skip);
       });
