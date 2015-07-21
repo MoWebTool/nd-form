@@ -269,11 +269,11 @@ var Form = Widget.extend({
 
     if (typeof skip !== 'undefined') {
       group.find('[name]').each(function(i, field) {
-        var _skip = field.getAttribute('data-skip');
-
-        // 0,1,2,3
-        field.setAttribute('data-skip-original', _skip || 0);
-
+        if (!field.getAttribute('data-skip-original')) {
+          var _skip = field.getAttribute('data-skip');
+          // 0,1,2,3
+          field.setAttribute('data-skip-original', _skip || 0);
+        }
         field.setAttribute('data-skip', skip);
       });
     }
