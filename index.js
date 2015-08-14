@@ -350,7 +350,7 @@ var Form = Widget.extend({
       classPrefix: this.get('classPrefix'),
       name: this.get('name'),
       nodeNames: nodeNames || this.get('nodeNames'),
-      fields: [options]
+      fields: options.fields || [options]
     }, {
       helpers: this.templateHelpers,
       partials: this.templatePartials
