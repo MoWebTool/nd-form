@@ -51,7 +51,7 @@
 
     {{!-- static --}}
     {{#isType 'static'}}
-      <div class="{{@root.classPrefix}}-static">{{value}}</div>
+      <div class="{{@root.classPrefix}}-static">{{#if html}}{{{html}}}{{else}}{{value}}{{/if}}</div>
     {{/isType}}
 
     {{!-- custom --}}
