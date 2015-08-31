@@ -11,7 +11,9 @@
       <{{@root.nodeNames.items}} class="{{@root.classPrefix}}-items{{#if inline}} {{@root.classPrefix}}-items-inline{{/if}}" data-role="form-items">
         {{> fields}}
       </{{@root.nodeNames.items}}>
-
+      {{#if comment}}
+        <div class="{{@root.classPrefix}}-comment">{{comment}}</div>
+      {{/if}}
   {{else}}
 
     class="{{@root.classPrefix}}-item{{#if icon}} {{@root.classPrefix}}-icon-item{{/if}}{{#if cls}} {{cls}}{{/if}}{{#if attrs.required}} required{{/if}}" data-role="form-item">
@@ -58,6 +60,10 @@
     {{#isType 'custom'}}
       {{{value}}}
     {{/isType}}
+
+    {{#if comment}}
+      <div class="{{@root.classPrefix}}-comment">{{comment}}</div>
+    {{/if}}
 
   {{/if}}
 
