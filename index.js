@@ -107,7 +107,7 @@ var Form = Widget.extend({
 
           // array
           if (Array.isArray(match)) {
-            return match.indexOf(value)!==-1;
+            return match.indexOf(value) !== -1;
           }
 
           return value === match;
@@ -161,28 +161,41 @@ var Form = Widget.extend({
 
     outFilter: function(data) {
       return data;
+    },
+
+    formCancel: function(callback) {
+      return callback();
+    },
+
+    formSubmit: function(callback) {
+      var form = this;
+
+      form.run(function() {
+        if (callback) {
+          callback(form.getData());
+        } else {
+          form.element.submit();
+        }
+      });
+
+      return false;
     }
   },
 
   events: {
     // for attrs.buttons
     'click button[data-role]': function(e) {
-      if (this.trigger(getEventName(e)) === false) {
-        // preventing, such as form submit
-        e.preventDefault();
-      }
-    }
-  },
+      var form = this;
 
-  submit: function(callback) {
-    this.run(function() {
-      if (callback) {
-        callback(this.getData());
-      } else {
-        // TODO: apply outFilter
-        this.element.submit();
-      }
-    }.bind(this));
+      var name = getEventName(e);
+      var wrap = form.get(name) || function(callback) {
+        callback();
+      };
+
+      (wrap.call(form, function(data) {
+        (form.trigger(name, data) === false) && e.preventDefault();
+      }) === false) && e.preventDefault();
+    }
   },
 
   initAttrs: function(config) {
@@ -251,7 +264,7 @@ var Form = Widget.extend({
 
   showGroup: function(name) {
     var group = this.getGroup(name)
-        .removeClass('ui-form-element-invisible');
+      .removeClass('ui-form-element-invisible');
 
     group.find('[name]').each(function(i, field) {
       var _skip = field.getAttribute('data-skip-original');
@@ -265,7 +278,7 @@ var Form = Widget.extend({
 
   hideGroup: function(name, skip) {
     var group = this.getGroup(name)
-        .addClass('ui-form-element-invisible');
+      .addClass('ui-form-element-invisible');
 
     if (typeof skip !== 'undefined') {
       group.find('[name]').each(function(i, field) {
