@@ -16,6 +16,9 @@ var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetim
 var SKIP_SUBMIT = 1;
 // var SKIP_VALIDATE = 2; // see: nd-validator
 
+var DATA_SKIP = 'data-skip';
+var DATA_SKIP_ORIGINAL = 'data-skip-original';
+
 function getEventName(e) {
   return e.currentTarget
     .getAttribute('data-role')
@@ -30,7 +33,7 @@ function filterSkip(elements) {
   var n = elements.length;
 
   for (i = 0; i < n; i++) {
-    if (!(+(elements[i].getAttribute('data-skip') || '') & SKIP_SUBMIT)) {
+    if (!(+(elements[i].getAttribute(DATA_SKIP) || '') & SKIP_SUBMIT)) {
       ret.push(elements[i]);
     }
   }
@@ -189,7 +192,7 @@ var Form = Widget.extend({
 
       var name = getEventName(e);
       var wrap = form.get(name) || function(callback) {
-        callback();
+        return callback();
       };
 
       (wrap.call(form, function(data) {
@@ -267,11 +270,11 @@ var Form = Widget.extend({
       .removeClass('ui-form-element-invisible');
 
     group.find('[name]').each(function(i, field) {
-      var _skip = field.getAttribute('data-skip-original');
+      var _skip = field.getAttribute(DATA_SKIP_ORIGINAL);
 
       if (_skip) {
-        field.setAttribute('data-skip', _skip);
-        field.removeAttribute('data-skip-original');
+        field.setAttribute(DATA_SKIP, _skip);
+        field.removeAttribute(DATA_SKIP_ORIGINAL);
       }
     });
   },
@@ -282,18 +285,18 @@ var Form = Widget.extend({
 
     if (typeof skip !== 'undefined') {
       group.find('[name]').each(function(i, field) {
-        if (!field.getAttribute('data-skip-original')) {
-          var _skip = field.getAttribute('data-skip');
+        if (!field.getAttribute(DATA_SKIP_ORIGINAL)) {
+          var _skip = field.getAttribute(DATA_SKIP);
           // 0,1,2,3
-          field.setAttribute('data-skip-original', _skip || 0);
+          field.setAttribute(DATA_SKIP_ORIGINAL, _skip || 0);
         }
-        field.setAttribute('data-skip', skip);
+        field.setAttribute(DATA_SKIP, skip);
       });
     }
   },
 
   setSkip: function(name, value) {
-    this.getField(name).attr('data-skip', '' + value);
+    this.getField(name).attr(DATA_SKIP, '' + value);
   },
 
   setField: function(name, options) {
