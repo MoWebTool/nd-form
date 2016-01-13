@@ -11,7 +11,7 @@
     {{#isType 'custom'}}
       {{{value}}}
     {{else}}
-      <button class="{{@root.classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}" data-role="{{role}}">{{label}}</button>
+      <button class="{{@root.classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}" data-role="{{role}}" {{#if disabled}} disabled {{/if}}>{{label}}</button>
     {{/isType}}
     {{/each}}
   </div>
