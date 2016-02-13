@@ -8,11 +8,11 @@
   {{!-- buttons --}}
   <div class="{{classPrefix}}-buttons" data-role="form-buttons">
     {{#each buttons}}
-    {{#isType 'custom'}}
+    {{#oneOf type 'custom'}}
       {{{value}}}
     {{else}}
-      <button class="{{@root.classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}" data-role="{{role}}" {{#if disabled}} disabled {{/if}}>{{label}}</button>
-    {{/isType}}
+      <button class="{{@root.classPrefix}}-button{{#if role}} button-{{role}}{{/if}}" type="{{type}}" data-role="{{role}}">{{label}}</button>
+    {{/oneOf}}
     {{/each}}
   </div>
 

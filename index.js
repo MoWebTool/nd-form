@@ -11,8 +11,6 @@ var FD = require('nd-formdata');
 var Queue = require('nd-queue');
 var Template = require('nd-template');
 
-var TEXT_TYPES = 'hidden,text,password,file,email,number,range,date,time,datetime,datetime-local,color,url,mobile,digits';
-
 var SKIP_SUBMIT = 1;
 // var SKIP_VALIDATE = 2; // see: nd-validator
 
@@ -47,10 +45,8 @@ var Form = Widget.extend({
   Implements: [Template, Queue],
 
   templateHelpers: {
-    isType: function(types, options) {
-      types || (types = TEXT_TYPES);
-
-      return types.split(',').indexOf(this.type || 'text') !== -1 ?
+    oneOf: function(type, types, options) {
+      return types.split(',').indexOf(type || 'text') !== -1 ?
         options.fn(this) : options.inverse(this);
     }
   },

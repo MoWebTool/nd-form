@@ -27,39 +27,39 @@
     {{/if}}
 
     {{!-- textarea --}}
-    {{#isType 'textarea,multiline'}}
+    {{#oneOf type 'textarea,multiline'}}
       <textarea class="{{@root.classPrefix}}-textarea" name="{{name}}" id="{{@root.name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
-    {{/isType}}
+    {{/oneOf}}
 
     {{!-- select --}}
-    {{#isType 'select'}}
+    {{#oneOf type 'select'}}
       <select name="{{name}}" id="{{@root.name}}-{{name}}"{{> attrs}}{{> messages}}>{{> options}}</select>
-    {{/isType}}
+    {{/oneOf}}
 
     {{!-- radio/checkbox --}}
-    {{#isType 'radio,checkbox'}}
+    {{#oneOf type 'radio,checkbox'}}
       <div class="{{type}}-group" id="{{@root.name}}-{{name}}">
         {{#each options}}
           <input type="{{../type}}" name="{{../name}}" id="{{@root.name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
           <label for="{{@root.name}}-{{../name}}-{{value}}">{{text}}</label>
         {{/each}}
       </div>
-    {{/isType}}
+    {{/oneOf}}
 
     {{!-- inputs --}}
-    {{#isType ''}}
+    {{#oneOf type 'hidden,text,password,file,email,number,range,date,time,datetime,datetime-local,color,url,mobile,digits'}}
       <input class="{{@root.classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{@root.name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
-    {{/isType}}
+    {{/oneOf}}
 
     {{!-- static --}}
-    {{#isType 'static'}}
+    {{#oneOf type 'static'}}
       <div class="{{@root.classPrefix}}-static">{{#if html}}{{{html}}}{{else}}{{value}}{{/if}}</div>
-    {{/isType}}
+    {{/oneOf}}
 
     {{!-- custom --}}
-    {{#isType 'custom'}}
+    {{#oneOf type 'custom'}}
       {{{value}}}
-    {{/isType}}
+    {{/oneOf}}
 
     {{#if comment}}
       <div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>
