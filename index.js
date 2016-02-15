@@ -45,10 +45,7 @@ var Form = Widget.extend({
   Implements: [Template, Queue],
 
   templateHelpers: {
-    oneOf: function(type, types, options) {
-      return types.split(',').indexOf(type || 'text') !== -1 ?
-        options.fn(this) : options.inverse(this);
-    }
+    oneOf: require('./src/oneOf')
   },
 
   templatePartials: {
