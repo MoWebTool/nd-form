@@ -160,6 +160,16 @@ var Form = Widget.extend({
     },
 
     formCancel: function(callback) {
+      var _formCancel = this._formCancel;
+
+      if (_formCancel) {
+        // clean first
+        delete this._formCancel;
+
+        _formCancel(callback);
+        return false;
+      }
+
       return callback();
     },
 
@@ -187,10 +197,18 @@ var Form = Widget.extend({
       var wrap = form.get(name) || function(callback) {
         return callback();
       };
+      var callback = function(data) {
+        // on('formXXX')
+        if (form.trigger(name, data) === false) {
+          e.preventDefault()
+        }
+        // if return false here, wrap will return false, the PD
+      };
 
-      (wrap.call(form, function(data) {
-        (form.trigger(name, data) === false) && e.preventDefault();
-      }) === false) && e.preventDefault();
+      // attrs.formXxx
+      if (wrap.call(form, callback) === false) {
+        e.preventDefault();
+      }
     }
   },
 
@@ -205,6 +223,20 @@ var Form = Widget.extend({
       fields: this.get('fields'),
       buttons: this.get('buttons')
     });
+  },
+
+  // for grid
+  installCancel: function(callback) {
+    if (callback) {
+      this._formCancel = callback;
+    } else {
+      delete this._formCancel;
+    }
+  },
+
+  // for grid
+  triggerCancel: function() {
+    this.$('[data-role="form-cancel"]').trigger('click');
   },
 
   // 获取实时字段值
