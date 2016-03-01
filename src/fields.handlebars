@@ -4,7 +4,7 @@
   {{!-- group --}}
   {{#if group}}
 
-    class="{{@root.classPrefix}}-group{{#if required}} required{{/if}}" data-role="form-group" data-group="{{group}}">
+    class="{{@root.classPrefix}}-group{{#if required}} required{{/if}}{{#if cls}} {{cls}}{{/if}}" data-role="form-group" data-group="{{group}}">
       {{#if label}}
         <label>{{label}}</label>
       {{/if}}
@@ -21,6 +21,8 @@
     {{#if label}}
       <label for="{{@root.name}}-{{name}}">{{label}}</label>
     {{/if}}
+
+    {{#if prefix}}<span class="{{@root.classPrefix}}-prefix">{{prefix}}</span>{{/if}}
 
     {{#if icon}}
       <span class="{{@root.classPrefix}}-icon iconfont iconfont-{{icon}}"></span>
@@ -40,8 +42,10 @@
     {{#oneOf type 'radio,checkbox'}}
       <div class="{{type}}-group" id="{{@root.name}}-{{name}}">
         {{#each options}}
+        <span class="{{type}}-pair">
           <input type="{{../type}}" name="{{../name}}" id="{{@root.name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
           <label for="{{@root.name}}-{{../name}}-{{value}}">{{text}}</label>
+        </span>
         {{/each}}
       </div>
     {{/oneOf}}
@@ -53,13 +57,15 @@
 
     {{!-- static --}}
     {{#oneOf type 'static'}}
-      <div class="{{@root.classPrefix}}-static">{{#if html}}{{{html}}}{{else}}{{value}}{{/if}}</div>
+      <div class="{{@root.classPrefix}}-static">{{#if html}}{{#if value}}{{{value}}}{{else}}{{{html}}}{{/if}}{{else}}{{value}}{{/if}}</div>
     {{/oneOf}}
 
     {{!-- custom --}}
     {{#oneOf type 'custom'}}
       {{{value}}}
     {{/oneOf}}
+
+    {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{suffix}}</span>{{/if}}
 
     {{#if comment}}
       <div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>
