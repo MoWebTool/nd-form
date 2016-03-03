@@ -17,7 +17,7 @@ $ npm install nd-form --save
 ```js
 var Form = require('nd-form');
 var Validator = require('nd-validator');
-var md5 = require('nd-md5');
+var md5s = require('nd-md5s');
 
 // use Form
 new Form({
@@ -67,7 +67,8 @@ new Form({
   // 处理待提交到服务端的数据
   outFilter: function(data) {
     // 对密码进行加密
-    data.password = md5(data.password);
+    var salt = '<salt>';
+    data.password = md5s(data.password, salt);
     return data;
   },
 
