@@ -42,7 +42,7 @@
     {{#oneOf type 'radio,checkbox'}}
       <div class="{{type}}-group" id="{{@root.name}}-{{name}}">
         {{#each options}}
-        <span class="{{type}}-pair">
+        <span class="{{../type}}-pair">
           <input type="{{../type}}" name="{{../name}}" id="{{@root.name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
           <label for="{{@root.name}}-{{../name}}-{{value}}">{{text}}</label>
         </span>
