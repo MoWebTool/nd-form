@@ -1,6 +1,6 @@
 {
   "name": "nd-form",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "简单的表单组件",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-form",
@@ -9,6 +9,8 @@
     "email": "liwenfu@crossjs.com"
   },
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "test": "node ./node_modules/karma/bin/karma start ./karma.conf.js",
     "test:dev": "npm run test -- --watch"
   },
@@ -23,7 +25,7 @@
   "main": "index.js",
   "dependencies": {
     "handlebars": "^4.0.5",
-    "nd-widget": "^3.0.1",
+    "nd-widget": "^3.0.2",
     "nd-template": "^3.0.1",
     "nd-queue": "^3.0.0",
     "nd-formdata": "^3.0.0",
