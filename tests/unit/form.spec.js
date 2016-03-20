@@ -1,7 +1,7 @@
 'use strict'
 
 var $ = require('nd-jquery')
-var Form = require('../index')
+var Form = require('../../index')
 //var debug = require('debug')
 
 describe('(app) home',function(){
@@ -40,8 +40,11 @@ describe('(app) home',function(){
       },{
         group: 'apply',
         fields: [{
-          name: 'apply_limit',
+          name: 'apply_max',
           label: '报名人数上限'
+        },{
+          name: 'apply_min',
+          label: '报名人数下限'
         }]
       }],
       // 配置按钮
@@ -70,9 +73,8 @@ describe('(app) home',function(){
 
   it('getElements() 获取表单下的所属元素', function(){
     var elements = form.getElements()
-    expect(elements.length).toEqual(6)
+    expect(elements.length).toEqual(7)
     expect(elements[0] === $('#form-loginName')[0]).toBe(true)
-    expect(elements[5] === $('.button-form-submit')[0]).toBe(true)
   })
 
   it('getItem() 获取字段的元素的容器', function(){
@@ -91,6 +93,64 @@ describe('(app) home',function(){
     expect(form.getValue('loginName')).toEqual('lmm0591')
     expect(form.getValue('approve')).toEqual(['1'])
   })
+
+  describe('hideGroup()', function(){
+
+    it('隐藏组元素',function(){
+      form.hideGroup('apply')
+      expect(form.getData()).toEqual({loginName: 'lmm0591', password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+      expect($('[data-group="apply"]').hasClass('ui-form-element-invisible')).toBe(true)
+    })
+
+    it('隐藏组元素，并且不获取隐藏的字段的数据',function(){
+      expect(form.hideGroup('apply',1))
+      expect($('[data-group="apply"]').hasClass('ui-form-element-invisible')).toBe(true)
+      expect(form.getData()).toEqual({ loginName: 'lmm0591', password: '123', approve: '1' })
+      var isExis = form.getElements().some(function(element){
+        return element === document.querySelector('[name="apply_max"]')
+      })
+      expect(isExis).toBe(false)
+    })
+
+    xit('隐藏组元素，并且不验证隐藏的字段的数据',function(){
+
+    })
+
+    xit('隐藏组元素，并且不验证，不获取隐藏的字段的数据',function(){
+
+    })
+
+  })
+
+  describe('setSkip()', function(){
+    it('正常访问',function(){
+      expect(form.setSkip('loginName',0))
+      expect(form.getData()).toEqual({loginName: 'lmm0591', password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+      var isExis = form.getElements().some(function(element){
+        return element === document.querySelector('[name="loginName"]')
+      })
+      expect(isExis).toBe(true)
+    })
+
+    it('忽略数据',function(){
+      expect(form.setSkip('loginName',1))
+      expect(form.getData()).toEqual({ password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+      expect(form.getValue('loginName')).toEqual('lmm0591')
+
+      var isExis = form.getElements().some(function(element){
+        return element === document.querySelector('[name="loginName"]')
+      })
+      expect(isExis).toBe(false)
+
+    })
+  })
+
+  it('removeField()',function(){
+    expect(form.removeField('loginName'))
+    expect(form.getData()).toEqual({ password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+    expect(document.querySelector('[name="loginName"]')).toEqual(null)
+  })
+
 
   afterEach(function(){
     $('#main').remove()

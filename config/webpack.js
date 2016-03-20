@@ -1,7 +1,9 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var path = require('path');
+'use strict'
+
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path')
 var pkg = require('../package.json')
-console.log(path.join(__dirname,'../index.tmpl'))
+
 module.exports = {
   name: 'client',
   target: 'web',

@@ -1,3 +1,5 @@
+'use strict'
+
 // Karma configuration
 // Generated on Wed Mar 16 2016 09:44:59 GMT+0800 (中国标准时间)
 var webpackConfig = require('./webpack')
@@ -28,14 +30,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './tests/**/*.spec.js' : ['webpack', 'sourcemap','coverage']
+      './tests/**/*.spec.js' : ['webpack', 'sourcemap']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress','coverage'],
+    reporters: ['progress'],
 
 
     // web server port
