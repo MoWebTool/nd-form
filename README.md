@@ -12,6 +12,27 @@
 $ npm install nd-form --save
 ```
 
+## 命令说明
+
+1. 执行测试用例
+
+```shell
+npm test 
+```
+
+2. 生成使用文档
+
+```shell
+npm run doc 
+```
+
+3. 打包 JS 文件
+
+```shell
+npm run pack 
+```
+
+
 ## 使用
 
 ```js
