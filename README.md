@@ -14,23 +14,37 @@ $ npm install nd-form --save
 
 ## 命令说明
 
-1. 执行测试用例
+1 执行测试用例
 
 ```shell
 npm test 
 ```
 
-2. 生成使用文档
+2 生成使用文档
 
 ```shell
 npm run doc 
 ```
 
-3. 打包 JS 文件
+3 打包 JS 文件
 
 ```shell
 npm run pack 
 ```
+
+## 目录说明
+
+```
+ND-FORM
+├─config ------ karma，webpack, doc 的配置文件
+├─src --------- handlebars的模板
+├─tests ------- 测试用例
+├─docs -------- 运行 npm run doc 后生成的说明文档
+├─dist -------- 运行 npm run pack 打包好的可部署文件
+└─index.js ---- 组件主源码
+
+```
+
 
 
 ## 使用

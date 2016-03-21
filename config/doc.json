@@ -3,6 +3,6 @@
     "--warnings": ["-link", "-no_doc"],
     "--seo": true,
     "--": "../index.js",
-    "--output":"../doc",
+    "--output":"../docs",
     "--footer": "Generated on {DATE}"
 }

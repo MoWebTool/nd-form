@@ -36,7 +36,7 @@ module.exports = {
     ]
   },
   output: {
-    path:'./dest',
+    path:'./dist',
     filename: pkg.name + '.js'
   }
 }
