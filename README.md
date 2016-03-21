@@ -37,7 +37,7 @@ npm run pack
 ```
 ND-FORM
 ├─config ------ karma，webpack, doc 的配置文件
-├─src --------- handlebars的模板
+├─src --------- handlebars 的模板
 ├─tests ------- 测试用例
 ├─docs -------- 运行 npm run doc 后生成的说明文档
 ├─dist -------- 运行 npm run pack 打包好的可部署文件
