@@ -4,7 +4,7 @@ var $ = require('nd-jquery')
 var Form = require('../../index')
 //var debug = require('debug')
 
-describe('(app) home',function(){
+describe('测试组件的 API',function(){
   var form
 
   beforeEach(function(){

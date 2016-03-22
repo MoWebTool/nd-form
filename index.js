@@ -289,6 +289,9 @@ var Form = Widget.extend({
       return data
     },
 
+
+
+
     /**
 		 * @cfg {Function} formCancel
 		 */
@@ -305,6 +308,8 @@ var Form = Widget.extend({
 
       return callback()
     },
+
+
 
     /**
 		 * @cfg {Function} formSubmit
@@ -323,6 +328,13 @@ var Form = Widget.extend({
       return false
     }
   },
+
+
+  /**
+   * @event formSubmit
+   * 表单提交事件，不触发原生的 submit 事件
+   * @param {Object} data 表单的数据
+   */
 
   events: {
     // for attrs.buttons
