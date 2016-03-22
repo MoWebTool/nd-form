@@ -4,16 +4,21 @@
   {{!-- group --}}
   {{#if group}}
 
-    class="{{@root.classPrefix}}-group{{#if required}} required{{/if}}{{#if cls}} {{cls}}{{/if}}" data-role="form-group" data-group="{{group}}">
+    class="{{@root.classPrefix}}-item {{@root.classPrefix}}-group{{#if required}} required{{/if}}{{#if cls}} {{cls}}{{/if}}" data-role="form-group" data-group="{{group}}">
       {{#if label}}
         <label>{{label}}</label>
       {{/if}}
+
+      {{#if prefix}}<span class="{{@root.classPrefix}}-prefix">{{prefix}}</span>{{/if}}
+
       <{{@root.nodeNames.items}} class="{{@root.classPrefix}}-items{{#if inline}} {{@root.classPrefix}}-items-inline{{/if}}" data-role="form-items">
         {{> fields}}
       </{{@root.nodeNames.items}}>
-      {{#if comment}}
-        <div class="{{@root.classPrefix}}-comment">{{comment}}</div>
-      {{/if}}
+      <div class="ui-form-explain"></div>
+
+      {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{suffix}}</span>{{/if}}
+
+      {{#if comment}}<div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>{{/if}}
   {{else}}
 
     class="{{@root.classPrefix}}-item{{#if icon}} {{@root.classPrefix}}-icon-item{{/if}}{{#if cls}} {{cls}}{{/if}}{{#if attrs.required}} required{{/if}}" data-role="form-item">
@@ -67,9 +72,7 @@
 
     {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{suffix}}</span>{{/if}}
 
-    {{#if comment}}
-      <div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>
-    {{/if}}
+    {{#if comment}}<div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>{{/if}}
 
   {{/if}}
 
