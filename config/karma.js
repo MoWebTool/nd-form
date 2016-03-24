@@ -18,7 +18,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './tests/**/*.spec.js'
+      './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      './node_modules/sinon/pkg/sinon.js',
+      {
+        pattern: './tests/**/*.spec.js',
+        watched: false,
+        served: true,
+        included: true
+      }
     ],
 
 
