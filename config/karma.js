@@ -37,7 +37,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './tests/**/*.spec.js' : ['webpack', 'sourcemap']
+      './tests/**/*.spec.js' : ['webpack', 'sourcemap','coverage']
     },
 
 
@@ -71,7 +71,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous
@@ -92,10 +92,8 @@ module.exports = function(config) {
     coverageReporter: {
       reporters: [
         { type : 'text-summary' },
-        { type: 'lcov', dir: 'coverage/lcov' },
-        { type :'html',dir : 'coverage/html'}
+        { type : 'lcov', dir : 'coverage' }
       ]
-
     },
     webpackMiddleware: {
       // webpack-dev-middleware configuration
