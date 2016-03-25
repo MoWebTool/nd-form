@@ -1,11 +1,7 @@
 <form class="{{classPrefix}}" name="{{name}}" action="{{action}}" method="{{method}}" data-role="form">
-
-  {{!-- fields --}}
   <{{nodeNames.items}} class="{{classPrefix}}-items" data-role="form-items">
     {{> fields}}
   </{{nodeNames.items}}>
-
-  {{!-- buttons --}}
   <div class="{{classPrefix}}-buttons" data-role="form-buttons">
     {{#each buttons}}
     {{#oneOf type 'custom'}}
@@ -15,5 +11,4 @@
     {{/oneOf}}
     {{/each}}
   </div>
-
 </form>
