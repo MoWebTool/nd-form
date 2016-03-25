@@ -134,7 +134,7 @@ describe('测试组件的 API',function(){
 
     it('忽略数据',function(){
       expect(form.setSkip('loginName',1))
-      expect(form.getData()).toEqual({ password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+      expect(form.getData().loginName).toEqual(undefined)
       expect(form.getValue('loginName')).toEqual('lmm0591')
 
       var isExis = form.getElements().some(function(element){

@@ -535,10 +535,11 @@ var Form = Widget.extend({
    * @param {String} name 字段的 name 属性
    * @param  {Number/String} skip 字段上数据的访问等级
    *
-   * 0 不忽略数据并且验证数据合法性
-   * 1 忽略数据，getData，getElements 方法不能访问到该字段
-   * 2 TODO:validator
-   * 3 TODO:validator
+   * 0 验证数据<br />
+   * 1 忽略数据，getData，getElements 方法不能访问到该字段<br />
+   * 2 TODO:validator<br />
+   * 3 TODO:validator<br />
+   *
    */
   setSkip: function(name, value) {
     this.getField(name).attr(DATA_SKIP, '' + value)
