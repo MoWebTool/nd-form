@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "node ./node_modules/karma/bin/karma start ./config/karma.js",
+    "test:dev": "node ./node_modules/karma/bin/karma start ./config/karma.js --dev",
     "doc": "jsduck --config=./config/doc.json",
+    "doc:o": "node ./node_modules/anywhere/bin/anywhere -d ./docs",
     "pack": "webpack --config=./config/webpack.js",
     "pack:html": "webpack --config=./config/webpack.js --entry=./config/main.js"
   },
@@ -34,6 +36,7 @@
     "nd-jquery": "^2.2.2"
   },
   "devDependencies": {
+    "anywhere": "^1.2.0",
     "chai": "^3.5.0",
     "eslint": "^2.5.1",
     "eslint-plugin-import": "^1.1.0",
@@ -42,6 +45,7 @@
     "html-webpack-plugin": "^2.10.0",
     "isparta-loader": "^2.0.0",
     "karma": "^0.13.8",
+    "karma-chrome-launcher": "^0.2.3",
     "karma-coverage": "^0.5.0",
     "karma-mocha": "^0.2.0",
     "karma-mocha-reporter": "^1.2.2",

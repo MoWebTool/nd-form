@@ -1,7 +1,7 @@
 # nd-form
 
 [![Travis](https://img.shields.io/travis/ndfront/nd-form.svg?style=flat-square)](https://github.com/ndfront/nd-form)
-[![Coveralls](https://img.shields.io/coveralls/ndfront/nd-form.svg?style=flat-square)](https://github.com/ndfront/nd-form)
+[![Coveralls](https://img.shields.io/coveralls/ndfront/nd-form/doc.svg?style=flat-square)](https://github.com/ndfront/nd-form)
 [![NPM version](https://img.shields.io/npm/v/nd-form.svg?style=flat-square)](https://npmjs.org/package/nd-form)
 
 > 集成了 nd-formdata 与 nd-queue 的表单。
@@ -38,7 +38,9 @@ npm run pack
 ND-FORM
 ├─config ------ karma，webpack, doc 的配置文件
 ├─src --------- handlebars 的模板
-├─tests ------- 测试用例
+├─tests ------- 测试
+├─tests\unit ---------- TDD测试
+├─tests\stories ------- BDD测试，描述一些测试故事
 ├─docs -------- 运行 npm run doc 后生成的说明文档
 ├─dist -------- 运行 npm run pack 打包好的可部署文件
 └─index.js ---- 组件主源码

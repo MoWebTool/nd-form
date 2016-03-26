@@ -3,6 +3,8 @@
 // Karma configuration
 // Generated on Wed Mar 16 2016 09:44:59 GMT+0800 (中国标准时间)
 var webpackConfig = require('./webpack')
+var argv = require('yargs').argv
+
 
 module.exports = function(config) {
   config.set({
@@ -19,6 +21,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      './node_modules/sinon/pkg/sinon.js',
       {
         pattern: './tests/**/*.spec.js',
         watched: false,
@@ -65,17 +68,24 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    // 在开发模式下用 Chrome 浏览器方便调试，
+    browsers: argv.dev ? ['Chrome'] : ['PhantomJS'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
+    singleRun: !argv.dev,
 
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity,
-
+/*
+    client: {
+      mocha: {
+        ui: 'bdd'
+      }
+    },
+*/
     webpack: {
         // karma watches the test entry points
         // (you don't need to specify the entry option)
@@ -84,7 +94,7 @@ module.exports = function(config) {
       resolve: webpackConfig.resolve,
       plugins: webpackConfig.plugins,
       module: {
-        preLoaders: [{
+        preLoaders: argv.dev ? [] : [{
           test: /\.js$/,
           loader: 'isparta',
           exclude: /node_modules|tests/
@@ -93,10 +103,11 @@ module.exports = function(config) {
       }
     },
     coverageReporter: {
-      reporters: [
-        { type : 'text-summary' },
-        { type : 'lcov', dir : 'coverage' }
-      ]
+      reporters: (function() {
+        var reporters = [{ type: 'text-summary' }]
+        argv.dev || reporters.push({ type: 'lcov', dir: 'coverage' })
+        return reporters
+      })()
     },
     webpackMiddleware: {
       // webpack-dev-middleware configuration

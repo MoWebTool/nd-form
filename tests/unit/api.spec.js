@@ -149,6 +149,31 @@ describe('测试 Form 组件的 API',function(){
     })
   })
 
+  it('setField() 改修字段信息', function() {
+    form.setField('loginName', {
+      value: '新名字',
+      attrs: {
+        disabled : 'disabled',
+        placeholder: '年龄'
+      }
+    })
+
+    assert.equal(form.$('[name="loginName"]').val(), '新名字')
+    assert.equal(form.$('[name="loginName"]').attr('disabled'), 'disabled')
+  })
+
+  it('addField() 设置字段信息', function() {
+    form.addField({
+      name: 'age',
+      value: '25',
+      attrs: {
+        placeholder: '年龄'
+      }
+    })
+
+    assert.equal(form.$('[name="age"]').val(),'25')
+  })
+
   it('removeField()',function(){
     form.removeField('loginName')
     assert.deepEqual(form.getData() , { password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})

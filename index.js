@@ -294,6 +294,7 @@ var Form = Widget.extend({
 
     /**
 		 * @cfg {Function} formCancel
+     * @param {Function} callback 运行该函数，触发 {@link ND.Form#event-formCancel formCancel} 事件
 		 */
     formCancel: function(callback) {
       var _formCancel = this._formCancel
@@ -313,10 +314,11 @@ var Form = Widget.extend({
 
     /**
 		 * @cfg {Function} formSubmit
+     * @param {Function} callback 运行该函数，触发 {@link ND.Form#event-formSubmit formSubmit} 事件
+     * @return {Object} 返回过滤后的数据
 		 */
     formSubmit: function(callback) {
       var form = this
-
       form.run(function() {
         if (callback) {
           callback(form.getData())
@@ -332,15 +334,21 @@ var Form = Widget.extend({
 
   /**
    * @event formSubmit
-   * 表单提交事件，不触发原生的 submit 事件
+   * 点击提交按钮，触发该事件，不触发原生的 submit 事件
    * @param {Object} data 表单的数据
    */
+
+  /**
+   * @event formCancel
+   * 点击取消按钮，触发该事件
+   * @return {Boolean} 返回 false 则阻止事件冒泡
+   */
+
 
   events: {
     // for attrs.buttons
     'click button[data-role]': function(e) {
       var form = this
-
       var name = getEventName(e)
       var wrap = form.get(name) || function(callback) {
         return callback()
@@ -569,6 +577,7 @@ var Form = Widget.extend({
     options.name = name
 
     this.removeField(name)
+    debugger
     this.addField(options)
   },
 
