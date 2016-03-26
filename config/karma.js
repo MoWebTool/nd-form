@@ -13,7 +13,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha'],
 
 
     // list of files / patterns to load in the browser
@@ -36,14 +36,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './tests/**/*.spec.js' : ['webpack', 'sourcemap','coverage']
+      './tests/**/*.spec.js' : ['webpack', 'sourcemap']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress','coverage'],
+    reporters: ['mocha','coverage'],
 
 
     // web server port
@@ -84,9 +84,13 @@ module.exports = function(config) {
       resolve: webpackConfig.resolve,
       plugins: webpackConfig.plugins,
       module: {
+        preLoaders: [{
+          test: /\.js$/,
+          loader: 'isparta',
+          exclude: /node_modules|tests/
+        }],
         loaders: webpackConfig.module.loaders
       }
-        // webpack configuration
     },
     coverageReporter: {
       reporters: [

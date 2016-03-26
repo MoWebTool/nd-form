@@ -7,7 +7,7 @@ var Form = require('../../index')
 describe('测试组件的 event',function(){
   var form
 
-  beforeEach(function(){
+  before(function(){
     $('<div id="main"/>').appendTo('body')
     form = new Form({
       fields: [{
@@ -66,7 +66,7 @@ describe('测试组件的 event',function(){
   })
 
 
-  afterEach(function(){
+  after(function(){
     $('#main').remove()
   })
 })

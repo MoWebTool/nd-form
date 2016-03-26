@@ -2,9 +2,13 @@
 
 var $ = require('nd-jquery')
 var Form = require('../../index')
+var chai = require('chai')
+var sinonChai = require('sinon-chai')
+var assert = chai.assert
+chai.use(sinonChai)
 //var debug = require('debug')
 
-describe('测试组件的 API',function(){
+describe('测试 Form 组件的 API',function(){
   var form
 
   beforeEach(function(){
@@ -60,56 +64,56 @@ describe('测试组件的 API',function(){
   it('getData() 获取数据', function(){
     var data = form.getData()
     form.$('[name="loginName"]').val('222222')
-    expect(data.loginName).toEqual('lmm0591')
-    expect(data.password).toEqual('123')
+    assert.equal(data.loginName , 'lmm0591')
+    assert.equal(data.password , '123')
   })
 
   it('setData() 设置数据', function(){
     form.setData({loginName:'我是新的值'})
     var data = form.getData()
-    expect(form.$('[name="loginName"]').val()).toEqual('我是新的值')
-    expect(data.loginName).toEqual('我是新的值')
+    assert.equal(form.$('[name="loginName"]').val() , '我是新的值')
+    assert.equal(data.loginName , '我是新的值')
   })
 
   it('getElements() 获取表单下的所属元素', function(){
     var elements = form.getElements()
-    expect(elements.length).toEqual(7)
-    expect(elements[0] === $('#form-loginName')[0]).toBe(true)
+    assert.equal(elements.length , 7)
+    assert.isTrue(elements[0] === $('#form-loginName')[0])
   })
 
   it('getItem() 获取字段的元素的容器', function(){
     var item = form.getItem('loginName')
     //元素中带有 data-role='form-item' 属性的为容器
-    expect(item.attr('data-role')).toEqual('form-item')
-    expect(item.find('[name="loginName"]').length).toEqual(1)
+    assert.equal(item.attr('data-role') , 'form-item')
+    assert.equal(item.find('[name="loginName"]').length , 1)
   })
 
   it('getField() 获取字段的元素', function(){
     var field = form.getField('loginName')
-    expect(field.val()).toEqual('lmm0591')
+    assert.equal(field.val() , 'lmm0591')
   })
 
   it('getValue() 获取字段的元素的值', function(){
-    expect(form.getValue('loginName')).toEqual('lmm0591')
-    expect(form.getValue('approve')).toEqual(['1'])
+    assert.equal(form.getValue('loginName') , 'lmm0591')
+    assert.deepEqual(form.getValue('approve') , ['1'])
   })
 
   describe('hideGroup()', function(){
 
     it('隐藏组元素',function(){
       form.hideGroup('apply')
-      expect(form.getData()).toEqual({loginName: 'lmm0591', password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
-      expect($('[data-group="apply"]').hasClass('ui-form-element-invisible')).toBe(true)
+      assert.deepEqual(form.getData() , {loginName: 'lmm0591', password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+      assert.isTrue($('[data-group="apply"]').hasClass('ui-form-element-invisible'))
     })
 
     it('隐藏组元素，并且不获取隐藏的字段的数据',function(){
-      expect(form.hideGroup('apply',1))
-      expect($('[data-group="apply"]').hasClass('ui-form-element-invisible')).toBe(true)
-      expect(form.getData()).toEqual({ loginName: 'lmm0591', password: '123', approve: '1' })
+      form.hideGroup('apply',1)
+      assert.isTrue($('[data-group="apply"]').hasClass('ui-form-element-invisible'))
+      assert.deepEqual(form.getData() , { loginName: 'lmm0591', password: '123', approve: '1' })
       var isExis = form.getElements().some(function(element){
         return element === document.querySelector('[name="apply_max"]')
       })
-      expect(isExis).toBe(false)
+      assert.isFalse(isExis)
     })
 
     xit('隐藏组元素，并且不验证隐藏的字段的数据',function(){
@@ -124,31 +128,31 @@ describe('测试组件的 API',function(){
 
   describe('setSkip()', function(){
     it('正常访问',function(){
-      expect(form.setSkip('loginName',0))
-      expect(form.getData()).toEqual({loginName: 'lmm0591', password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+      form.setSkip('loginName',0)
+      assert.deepEqual(form.getData() , {loginName: 'lmm0591', password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
       var isExis = form.getElements().some(function(element){
         return element === document.querySelector('[name="loginName"]')
       })
-      expect(isExis).toBe(true)
+      assert.isTrue(isExis)
     })
 
     it('忽略数据',function(){
-      expect(form.setSkip('loginName',1))
-      expect(form.getData().loginName).toEqual(undefined)
-      expect(form.getValue('loginName')).toEqual('lmm0591')
+      assert.equal(form.setSkip('loginName',1))
+      assert.isUndefined(form.getData().loginName)
+      assert.equal(form.getValue('loginName') , 'lmm0591')
 
       var isExis = form.getElements().some(function(element){
         return element === document.querySelector('[name="loginName"]')
       })
-      expect(isExis).toBe(false)
+      assert.isFalse(isExis)
 
     })
   })
 
   it('removeField()',function(){
-    expect(form.removeField('loginName'))
-    expect(form.getData()).toEqual({ password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
-    expect(document.querySelector('[name="loginName"]')).toEqual(null)
+    form.removeField('loginName')
+    assert.deepEqual(form.getData() , { password: '123', approve: '1', 'apply_max': '', 'apply_min': ''})
+    assert.isNull(document.querySelector('[name="loginName"]'))
   })
 
 

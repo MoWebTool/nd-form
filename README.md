@@ -9,7 +9,7 @@
 ## 安装
 
 ```bash
-$ npm install nd-form --save
+$ npm install nd-form --save -r https://registry.npm.taobao.org
 ```
 
 ## 命令说明
@@ -45,6 +45,15 @@ ND-FORM
 
 ```
 
+## 依赖技术
+
+- [webpack](http://webpack.github.io/) 组件的打包工具
+- [karma](https://karma-runner.github.io/) JavaScript 测试管理工具（Test Runner）
+- [phantomjs](http://phantomjs.org/) 基于 WebKit 的服务器端的浏览
+- [mocha](http://mochajs.org/) JS的测试框架
+- [isparta](https://github.com/douglasduteil/isparta) 代码测试覆盖工具
+- [eslint](http://eslint.org/) 编码规范检查，有效控制代码质量
+- [handlebars](http://handlebarsjs.com/) js的模板引擎
 
 
 ## 使用
