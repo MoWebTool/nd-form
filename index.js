@@ -138,29 +138,33 @@ var Form = Widget.extend({
     },
 
     /**
-		 *  数据
-		 * @cfg {Object} model
-		 */
+     *  数据
+     * @cfg {Object} model
+     */
     model: {},
 
     /**
-		 * form 元素的 name 属性的值
-		 * @cfg {String} [name='form']
-		 */
+     * form 元素的 name 属性的值
+     * @cfg {String} [name='form']
+     */
     name: 'form',
 
     /**
-		 * form 元素的 method 属性的值
-		 * @cfg {String} [method='POST']
-		 */
+     * form 元素的 method 属性的值
+     * @cfg {String} [method='POST']
+     */
     method: 'POST',
 
-    // 提交数据
+    /**
+     * 设置表单的默认值，只能在渲染之前有效
+     * @cfg {Object} formData
+     */
     formData: {
       getter: function(values) {
         return values
       },
       setter: function(values) {
+        //如果渲染完成就直接返回值，不做后续的处理了
         if (!values || this.rendered) {
           return values
         }
@@ -261,11 +265,6 @@ var Form = Widget.extend({
      * @cfg {Array} fields.attrs 设置元素上的属性值
      * @cfg {Boolean} fields.attrs.required 是否为必填
      *
-     * @cfg {Array} fields.buttons 表单按钮
-     * @cfg {String} fields.buttons.role 按钮动作
-     * @cfg {String} fields.buttons.type 按钮类型，当设置成 custom 时，可以自定义按钮（如: '<a>点击</a>'）
-     * @cfg {String} fields.buttons.label 按钮文字
-     * @cfg {Boolean} fields.buttons.disabled 是否禁用按钮
      */
     fields: [],
 
@@ -370,6 +369,15 @@ var Form = Widget.extend({
 
   initAttrs: function(config) {
     Form.superclass.initAttrs.call(this, config)
+
+    /**
+     * @cfg {Array} buttons 表单按钮
+     *
+     * @cfg {String} buttons.role 按钮动作
+     * @cfg {String} buttons.type 按钮类型，当设置成 custom 时，可以自定义按钮（如: '<a>点击</a>'）
+     * @cfg {String} buttons.label 按钮文字
+     * @cfg {Boolean} buttons.disabled 是否禁用按钮
+     */
 
     this.set('model', {
       name: this.get('name'),
@@ -577,7 +585,7 @@ var Form = Widget.extend({
     options.name = name
 
     this.removeField(name)
-    debugger
+
     this.addField(options)
   },
 

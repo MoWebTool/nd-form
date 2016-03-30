@@ -6,7 +6,7 @@ var chai = require('chai')
 var sinonChai = require('sinon-chai')
 var assert = chai.assert
 chai.use(sinonChai)
-//var debug = require('debug')
+var debug = require('debug')
 
 describe('测试 Form 组件的 API',function(){
   var form
@@ -98,6 +98,64 @@ describe('测试 Form 组件的 API',function(){
     assert.deepEqual(form.getValue('approve') , ['1'])
   })
 
+
+  it('showGroup() 显示一组字段',function(){
+    form.hideGroup('apply',1)
+    assert.isUndefined(form.getData().apply_max)
+    assert.isUndefined(form.getData().apply_min)
+    form.showGroup('apply')
+    assert.strictEqual(form.getData().apply_max, '')
+    assert.strictEqual(form.getData().apply_min, '')
+    assert.isFalse($('[data-group="apply"]').hasClass('ui-form-element-invisible'))
+  })
+
+  describe('formData()', function() {
+
+    it('设置表单的初使属性', function() {
+      form.destroy()
+      $('#main').remove()
+
+      $('<div id="main"/>').appendTo('body')
+      form = new Form({
+        formData: {approve:2,loginName:'张三'},
+        fields: [{
+          icon: 'user-o',
+          name: 'loginName',
+          value: 'lmm0591',
+          attrs: {
+            placeholder: '帐号'
+          }
+        }, {
+          icon: 'lock-o',
+          name: 'password',
+          type: 'password',
+          value: '123',
+          attrs: {
+            required: 'required'
+          }
+        }, {
+          name: 'approve',
+          label: '需要审核',
+          type: 'radio',
+          options: [{
+            text: '否',
+            value: 1,
+            checked: true
+          }, {
+            text: '是',
+            value: 2
+          }]
+        }],
+        parentNode: '#main'
+      }).render()
+
+      assert.deepEqual(form.get('formData'), { loginName: '张三', approve: 2 })
+      assert.deepEqual(form.getData().loginName, '张三')
+      assert.deepEqual(form.getData().approve, '2' )
+      assert.deepEqual(form.getValue('approve'), ['2'] )
+    })
+  })
+
   describe('hideGroup()', function(){
 
     it('隐藏组元素',function(){
@@ -181,7 +239,8 @@ describe('测试 Form 组件的 API',function(){
   })
 
 
-  afterEach(function(){
+  afterEach(function() {
+    form.destroy()
     $('#main').remove()
   })
 })
