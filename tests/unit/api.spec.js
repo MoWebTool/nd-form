@@ -6,7 +6,7 @@ var chai = require('chai')
 var sinonChai = require('sinon-chai')
 var assert = chai.assert
 chai.use(sinonChai)
-var debug = require('debug')
+//var debug = require('debug')
 
 describe('测试 Form 组件的 API',function(){
   var form

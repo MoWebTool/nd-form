@@ -1,7 +1,7 @@
 # nd-form
 
 [![Travis](https://img.shields.io/travis/ndfront/nd-form.svg?style=flat-square)](https://github.com/ndfront/nd-form)
-[![Coveralls](https://img.shields.io/coveralls/ndfront/nd-form/doc.svg?style=flat-square)](https://github.com/ndfront/nd-form)
+[![Coveralls](https://img.shields.io/coveralls/ndfront/nd-form.svg?style=flat-square)](https://github.com/ndfront/nd-form)
 [![NPM version](https://img.shields.io/npm/v/nd-form.svg?style=flat-square)](https://npmjs.org/package/nd-form)
 
 > 集成了 nd-formdata 与 nd-queue 的表单。
