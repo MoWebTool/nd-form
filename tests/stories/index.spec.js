@@ -3,7 +3,7 @@
 // var $ = require('nd-jquery')
 var chai = require('chai')
 var sinonChai = require('sinon-chai')
-var Form = require('../index')
+var Form = require('../../index')
 
 var expect = chai.expect
 // var sinon = window.sinon
