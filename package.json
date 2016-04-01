@@ -1,6 +1,6 @@
 {
-  "name": "nd-form1",
-  "version": "3.0.7",
+  "name": "nd-form",
+  "version": "3.0.9",
   "description": "简单的表单组件",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-form",
@@ -9,10 +9,11 @@
     "email": "liwenfu@crossjs.com"
   },
   "scripts": {
+    "prepublish": "npm run lint",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "node ./node_modules/karma/bin/karma start ./config/karma.js",
-    "test:dev": "node ./node_modules/karma/bin/karma start ./config/karma.js --dev",
+    "test:dev": "npm run test -- --dev --watch",
     "doc": "jsduck --config=./config/doc.json",
     "doc:o": "node ./node_modules/anywhere/bin/anywhere -d ./docs",
     "pack": "webpack --config=./config/webpack.js",
