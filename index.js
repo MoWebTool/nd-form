@@ -3,8 +3,6 @@
 var $ = require('nd-jquery')
 var Widget = require('nd-widget')
 var FD = require('nd-formdata')
-var Queue = require('nd-queue')
-var Template = require('nd-template')
 
 var SKIP_SUBMIT = 1
 // var SKIP_VALIDATE = 2 // see: nd-validator
@@ -96,13 +94,11 @@ function filterSkip(elements) {
  */
 var Form = Widget.extend({
 
-  // 使用 handlebars
-  Implements: [Template, Queue],
-
-  templateHelpers: {
-    oneOf: require('./src/oneOf'),
-    equal: require('./src/equal')
-  },
+  // 使用 handlebars 与队列
+  Implements: [
+    require('nd-template'),
+    require('nd-queue')
+  ],
 
   templatePartials: {
     fields: require('./src/fields.handlebars'),
@@ -112,7 +108,6 @@ var Form = Widget.extend({
   },
 
   attrs: {
-
 
     /**
 		 * 统一样式前缀
@@ -125,6 +120,11 @@ var Form = Widget.extend({
 		 * @cfg {String} template
 		 */
     template: require('./src/form.handlebars'),
+
+    templateHelpers: {
+      oneOf: require('./src/oneOf'),
+      equal: require('./src/equal')
+    },
 
     /**
 		 * 标签名
@@ -234,7 +234,6 @@ var Form = Widget.extend({
       }
     },
 
-
     /**
      * @cfg {Array} fields 表单的元素
      *
@@ -287,9 +286,6 @@ var Form = Widget.extend({
     outFilter: function(data) {
       return data
     },
-
-
-
 
     /**
 		 * @cfg {Function} formCancel

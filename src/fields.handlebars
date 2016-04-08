@@ -3,25 +3,25 @@
   {{#if group}}
     class="{{@root.classPrefix}}-item {{@root.classPrefix}}-group{{#if required}} required{{/if}}{{#if cls}} {{cls}}{{/if}}" data-role="form-group" data-group="{{group}}">
       {{#if label}}
-        <label>{{label}}</label>
+        <label>{{__ label}}</label>
       {{/if}}
-      {{#if prefix}}<span class="{{@root.classPrefix}}-prefix">{{prefix}}</span>{{/if}}
+      {{#if prefix}}<span class="{{@root.classPrefix}}-prefix">{{__ prefix}}</span>{{/if}}
       <{{@root.nodeNames.items}} class="{{@root.classPrefix}}-items{{#if inline}} {{@root.classPrefix}}-items-inline{{/if}}" data-role="form-items">
         {{> fields}}
       </{{@root.nodeNames.items}}>
-      {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{suffix}}</span>{{/if}}
+      {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{__ suffix}}</span>{{/if}}
       {{#if inline}}<div class="ui-form-explain"></div>{{/if}}
-      {{#if comment}}<div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>{{/if}}
+      {{#if comment}}<div class="{{@root.classPrefix}}-comment">{{{__ comment}}}</div>{{/if}}
   {{else}}
     class="{{@root.classPrefix}}-item{{#if icon}} {{@root.classPrefix}}-icon-item{{/if}}{{#if cls}} {{cls}}{{/if}}{{#if attrs.required}} required{{/if}}" data-role="form-item">
     {{#if label}}
-      <label for="{{@root.name}}-{{name}}">{{label}}</label>
+      <label for="{{@root.name}}-{{name}}">{{__ label}}</label>
     {{/if}}
-    {{#if prefix}}<span class="{{@root.classPrefix}}-prefix">{{prefix}}</span>{{/if}}
+    {{#if prefix}}<span class="{{@root.classPrefix}}-prefix">{{__ prefix}}</span>{{/if}}
     {{#if icon}}
       <span class="{{@root.classPrefix}}-icon iconfont iconfont-{{icon}}"></span>
     {{/if}}
-    {{#oneOf type 'textarea,multiline'}}
+    {{#oneOf type 'textarea,multiline,json'}}
       <textarea class="{{@root.classPrefix}}-textarea" name="{{name}}" id="{{@root.name}}-{{name}}"{{> attrs}}{{> messages}}>{{value}}</textarea>
     {{/oneOf}}
     {{#oneOf type 'select'}}
@@ -32,7 +32,7 @@
         {{#each options}}
         <span class="{{../type}}-pair">
           <input type="{{../type}}" name="{{../name}}" id="{{@root.name}}-{{../name}}-{{value}}" value="{{value}}"{{#if checked}} checked{{/if}}{{#each ../attrs}}{{#if this}} {{@key}}="{{this}}"{{/if}}{{/each}}{{#each ../messages}} data-errormessage-{{@key}}="{{this}}"{{/each}}>
-          <label for="{{@root.name}}-{{../name}}-{{value}}">{{text}}</label>
+          <label for="{{@root.name}}-{{../name}}-{{value}}">{{__ text}}</label>
         </span>
         {{/each}}
       </div>
@@ -41,13 +41,13 @@
       <input class="{{@root.classPrefix}}-input" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" id="{{@root.name}}-{{name}}" value="{{value}}"{{> attrs}}{{> messages}}>
     {{/oneOf}}
     {{#oneOf type 'static'}}
-      <div class="{{@root.classPrefix}}-static">{{#if html}}{{#if value}}{{{value}}}{{else}}{{{html}}}{{/if}}{{else}}{{value}}{{/if}}</div>
+      <div class="{{@root.classPrefix}}-static">{{#if html}}{{#if value}}{{{value}}}{{else}}{{{__ html}}}{{/if}}{{else}}{{value}}{{/if}}</div>
     {{/oneOf}}
     {{#oneOf type 'custom'}}
-      {{{value}}}
+      {{{__ value}}}
     {{/oneOf}}
-    {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{suffix}}</span>{{/if}}
-    {{#if comment}}<div class="{{@root.classPrefix}}-comment">{{{comment}}}</div>{{/if}}
+    {{#if suffix}}<span class="{{@root.classPrefix}}-suffix">{{__ suffix}}</span>{{/if}}
+    {{#if comment}}<div class="{{@root.classPrefix}}-comment">{{{__ comment}}}</div>{{/if}}
   {{/if}}
   </{{@root.nodeNames.item}}>
 {{/each}}
