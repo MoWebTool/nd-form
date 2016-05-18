@@ -1,7 +1,7 @@
 'use strict'
 
 var $ = require('nd-jquery')
-var Form = require('../../index')
+var Form = require('../index')
 var chai = require('chai')
 var sinonChai = require('sinon-chai')
 var assert = chai.assert

@@ -17,19 +17,19 @@ $ npm install nd-form --save -r https://registry.npm.taobao.org
 1 执行测试用例
 
 ```shell
-npm test 
+npm test
 ```
 
 2 生成使用文档
 
 ```shell
-npm run doc 
+npm run doc
 ```
 
 3 打包 JS 文件
 
 ```shell
-npm run pack 
+npm run pack
 ```
 
 ## 目录说明
@@ -37,10 +37,9 @@ npm run pack
 ```
 ND-FORM
 ├─config ------ karma，webpack, doc 的配置文件
+├─coverage ---- 运行 npm test 命令后生成的测试覆盖率报告
 ├─src --------- handlebars 的模板
-├─tests ------- 测试
-├─tests\unit ---------- TDD测试
-├─tests\stories ------- BDD测试，描述一些测试故事
+├─tests ------- 单元测试
 ├─docs -------- 运行 npm run doc 后生成的说明文档
 ├─dist -------- 运行 npm run pack 打包好的可部署文件
 └─index.js ---- 组件主源码
@@ -68,7 +67,7 @@ var md5s = require('nd-md5s');
 // use Form
 new Form({
   className: 'ui-form-login',
-  
+
   // 更多 plugins，见 nd-form-extra
   plugins: [Validator],
 
