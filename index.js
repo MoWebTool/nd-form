@@ -218,10 +218,15 @@ var Form = Widget.extend({
               field.value = value
 
               if (field.options) {
-                // 设置 option/checkbox/radio 的选中状态
-                field.options.forEach(function(option) {
-                  option.selected = option.checked =
-                    (matchers[field.name] || valueMatcher)(option.value, field.value, field.name)
+                field.options = field.options.map(function(option) {
+                  // 设置 option/checkbox/radio 的选中状态
+                  var checked = (matchers[field.name] || valueMatcher)(option.value, field.value, field.name)
+                  return {
+                    text: option.text,
+                    value: option.value,
+                    checked: checked,
+                    selected: checked
+                  }
                 })
               }
             }
